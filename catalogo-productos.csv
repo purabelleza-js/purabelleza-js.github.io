@@ -1,0 +1,14 @@
+id,name,category,price,tag,image,alt,stock,available
+corrector-baoshi,Corrector Baoshi,Rostro,2500,,images/Corrector.jpg,Corrector Baoshi en barra,1,true
+mascara-miss-betty,Máscara de pestañas Miss Betty,Ojos,2000,,images/Rimel_volu.jpg,Máscaras de pestañas Miss Betty para largo y volumen,2,true
+lip-gloss-lip-oil,"Lip gloss y lip oil (4 modelos)(Por unidad)",Labios,1500,,images/Gloss.jpg,Cuatro modelos de lip gloss y lip oil,3,true
+mascarillas-faciales,Mascarillas faciales Capybara y Centella Asiática,Rostro,2000,,images/Mascarilla.jpg,Mascarillas faciales Capybara y de Centella Asiática,2,true
+delineador-magnetico,Delineador retráctil Romantic Rain,Ojos,2000,,images/delineador_de_ojos_Magnetico.jpg,Delineador magnético negro Romantic Rain,2,true
+balsamo-chanchito,Bálsamo labial Chanchito,Labios,2000,,images/Balsamo_chanchito.jpg,Bálsamo labial hidratante con envase de chanchito rosa,1,true
+delineador-ultra-fino,Delineador ultrafino negro,Ojos,2000,,images/Delineador_de_ojos.jpg,"Delineador negro ultrafino, tono 1001",2,true
+pestanas-8d,Pestañas 8D,Ojos,2000,,images/pestañas_8D.jpg,Pestañas postizas 8D reutilizables,1,true
+labial-miss-betty,Labial Miss Betty,Labios,2500,,images/Labial_Mate.jpg,Labial Miss Betty de color duradero,1,true
+parches-acne,Parches para el acné,Rostro,2000,,images/Parche_de_acne.jpg,Parches faciales para granitos de día y noche,0,false
+unas-press-on,Uñas press on celestes y rosas,Uñas,2000,,images/Uñas_efecto_gato.jpg,Uñas press on en color celeste y rosa,1,true
+Toallitas_Humedas,Toallitas húmedas,Rostro,1500,,images/Toallitas_Humedas.jpg,Toallitas húmedas para el rostro,1,true
+Gloss_Rosa_Con_Brillo,Gloss rosa con brillo,Labios,2500,,images/Gloss_Rosa_Con_Brillo.jpg,Gloss rosado con brillo,0,false

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Descubre maquillaje para todos los días y arma tu pedido de forma fácil."
+    />
+    <meta name="theme-color" content="#fbf6fc" />
+    <title>Pura belleza JS — Maquillaje para sentirte tú</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="catalog-config.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="announcement">¡Si no encuentras lo que buscas, podemos conseguírtelo!</div>
+    <header class="site-header">
+      <div class="brand">
+        <a href="#" aria-label="Pura belleza JS, inicio">
+          <img class="brand-logo" src="assets/IMG-20261103-WA0092.jpg" alt="Logotipo de Pura Belleza JS con mariposas y maquillaje en tonos rosa y violeta" />
+        </a>
+        <span class="brand-copy">
+          <span class="brand-name">Pura belleza JS</span>
+          <details class="brand-socials">
+            <summary>Redes sociales</summary>
+            <div class="brand-social-menu">
+              <a href="https://www.instagram.com/pura_belleza_js?rpxt=eTNlajBjNHBmaGlp" target="_blank" rel="noopener noreferrer">
+                <svg class="instagram-social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <rect x="3.25" y="3.25" width="17.5" height="17.5" rx="5.25" />
+                  <circle cx="12" cy="12" r="4.1" />
+                  <circle class="social-icon-dot" cx="17.7" cy="6.7" r="1" />
+                </svg>
+                <span>Instagram <small>@pura_belleza_js</small></span>
+                <span class="social-menu-arrow" aria-hidden="true">↗</span>
+              </a>
+              <a href="https://chat.whatsapp.com/EgOdP0QEhUzGZdJHwsZKS0?s=cl&amp;p=a&amp;iam=2" target="_blank" rel="noopener noreferrer">
+                <svg class="whatsapp-social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M20.2 11.7a8.2 8.2 0 0 1-12.1 7.2L3.8 20l1.2-4.1a8.2 8.2 0 1 1 15.2-4.2Z" />
+                  <path d="M8.8 8.4c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4 0 .5l-.5.7c-.2.2-.2.4-.1.6.5.9 1.2 1.5 2.1 1.9.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.4.4 0 .2-.1 1-.7 1.4-.5.4-1.2.6-2 .4-1.2-.3-2.6-1-3.8-2.1-1-.9-1.8-2.1-2.1-3.1-.3-.8 0-1.6.4-2.1Z" />
+                </svg>
+                <span>Grupo de WhatsApp</span>
+                <span class="social-menu-arrow" aria-hidden="true">↗</span>
+              </a>
+              <a href="https://whatsapp.com/channel/0029VbDyXXRF1YlaJ4uA7J0E" target="_blank" rel="noopener noreferrer">
+                <svg class="whatsapp-social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M20.2 11.7a8.2 8.2 0 0 1-12.1 7.2L3.8 20l1.2-4.1a8.2 8.2 0 1 1 15.2-4.2Z" />
+                  <path d="M8.8 8.4c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4 0 .5l-.5.7c-.2.2-.2.4-.1.6.5.9 1.2 1.5 2.1 1.9.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.4.4 0 .2-.1 1-.7 1.4-.5.4-1.2.6-2 .4-1.2-.3-2.6-1-3.8-2.1-1-.9-1.8-2.1-2.1-3.1-.3-.8 0-1.6.4-2.1Z" />
+                </svg>
+                <span>Canal de WhatsApp</span>
+                <span class="social-menu-arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </details>
+          <small>MAKEUP, SKINCARE Y MUCHO MÁS</small>
+        </span>
+      </div>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a href="#productos">Productos</a>
+        <a href="#nosotras">Nuestra esencia</a>
+        <a href="#pedidos">Pedidos y consultas</a>
+      </nav>
+      <button class="cart-button" id="open-cart" type="button" aria-label="Abrir carrito">
+        <span class="bag-icon" aria-hidden="true">♡</span>
+        <span>Mi pedido</span>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span>TU BELLEZA, TU ESTILO</p>
+          <h1>Un toque de color.<br /><em>Todo tuyo.</em></h1>
+          <p class="hero-description">
+            Maquillaje elegido con cariño para acompañarte en cada versión de ti.
+          </p>
+          <a class="button button-dark" href="#productos">Descubrir productos <span>↗</span></a>
+          <div class="hero-note"><span>✳</span> Belleza simple, hecha para disfrutar</div>
+        </div>
+        <div class="hero-art">
+          <img class="hero-logo" src="assets/IMG-20261103-WA0092.jpg" alt="Logo de Pura belleza JS" />
+        </div>
+      </section>
+
+      <section class="shop-section" id="productos">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">NUESTRO CATÁLOGO</p>
+            <h2>Un poquito de <em>magia</em></h2>
+          </div>
+          <p>Esenciales para jugar, crear y sentirte increíble.</p>
+        </div>
+        <div class="shop-tools">
+          <div class="filters" role="group" aria-label="Filtrar productos">
+            <button class="filter-chip active" type="button" data-category="Todos">Todo</button>
+            <button class="filter-chip" type="button" data-category="Rostro">Rostro</button>
+            <button class="filter-chip" type="button" data-category="Labios">Labios</button>
+            <button class="filter-chip" type="button" data-category="Ojos">Ojos</button>
+            <button class="filter-chip" type="button" data-category="Accesorios">Accesorios</button>
+            <button class="filter-chip" type="button" data-category="Uñas">Uñas</button>
+          </div>
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="product-search" type="search" placeholder="Buscar un producto" aria-label="Buscar un producto" />
+          </label>
+        </div>
+        <div class="product-grid" id="product-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="brand-story" id="nosotras">
+        <div class="story-flower" aria-hidden="true">✳</div>
+        <div>
+          <p class="eyebrow">UN MOMENTO PARA TI</p>
+          <h2>La belleza está en<br /><em>cómo te hace sentir.</em></h2>
+          <p>Elegimos cada producto pensando en esos pequeños rituales que hacen especial tu día.</p>
+        </div>
+        <a class="text-link" href="#productos">Encuentra tus favoritos <span>↗</span></a>
+      </section>
+
+      <section class="contact-section" id="pedidos">
+        <div class="contact-heading">
+          <p class="eyebrow">ESTAMOS PARA AYUDARTE</p>
+          <h2>¿Hacemos tu <em>pedido?</em></h2>
+          <p>Elige tus productos o escríbenos por WhatsApp si tienes alguna consulta.</p>
+        </div>
+        <div class="contact-actions">
+          <article class="contact-card order-card">
+            <span class="contact-icon" aria-hidden="true">♡</span>
+            <h3>Quiero hacer un pedido</h3>
+            <p>Agrega tus favoritos al carrito y envíanos tu pedido directamente por WhatsApp.</p>
+            <a class="button button-dark" href="#productos">Ver productos y pedir <span>↗</span></a>
+          </article>
+          <article class="contact-card">
+            <span class="contact-icon" aria-hidden="true">✳</span>
+            <h3>¿Tienes una consulta?</h3>
+            <p>Para consultas o pedidos de nuestro emprendimiento, escríbenos por WhatsApp.</p>
+            <a class="contact-number" href="https://wa.me/5493878759878?text=Hola%2C%20tengo%20una%20consulta%20sobre%20sus%20productos." target="_blank" rel="noopener noreferrer">
+              <span>Sara · Atención al cliente <small>+54 9 387 875-9878</small></span><span aria-hidden="true">↗</span>
+            </a>
+            <a class="contact-number" href="https://wa.me/5493878415462?text=Hola%2C%20tengo%20una%20consulta%20sobre%20sus%20productos." target="_blank" rel="noopener noreferrer">
+              <span>Joaquín · Atención al cliente <small>+54 9 387 841-5462</small></span><span aria-hidden="true">↗</span>
+            </a>
+          </article>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="#">
+        <img class="brand-logo" src="assets/IMG-20261103-WA0092.jpg" alt="Logotipo de Pura Belleza JS con mariposas y maquillaje en tonos rosa y violeta" />
+        <span class="brand-copy"><span class="brand-name">Pura belleza JS</span><small>MAKEUP, SKINCARE Y MUCHO MÁS</small></span>
+      </a>
+      <p>Hecho con cariño, para ti. <span>♡</span></p>
+      <a href="#productos">Volver arriba ↑</a>
+    </footer>
+
+    <div class="overlay" id="overlay" hidden></div>
+    <aside class="cart-panel" id="cart-panel" aria-labelledby="cart-title" aria-hidden="true">
+      <div class="cart-header">
+        <div><p class="eyebrow">TU SELECCIÓN</p><h2 id="cart-title">Mi pedido</h2></div>
+        <button class="icon-button" id="close-cart" type="button" aria-label="Cerrar carrito">×</button>
+      </div>
+      <div class="cart-items" id="cart-items"></div>
+      <div class="cart-empty" id="cart-empty">
+        <span aria-hidden="true">♡</span>
+        <p>Tu bolsita está esperando<br />algo bonito.</p>
+        <button class="text-link" id="keep-shopping" type="button">Ver productos ↗</button>
+      </div>
+      <div class="cart-summary" id="cart-summary" hidden>
+        <div class="total-row"><span>Subtotal</span><strong id="cart-total"></strong></div>
+        <p>Envío y forma de pago se coordinan por WhatsApp.</p>
+        <button class="button button-dark checkout-button" id="checkout" type="button">Continuar pedido <span>↗</span></button>
+      </div>
+    </aside>
+
+    <dialog class="checkout-dialog" id="checkout-dialog">
+      <form id="checkout-form">
+        <button class="icon-button dialog-close" id="close-dialog" type="button" aria-label="Cerrar">×</button>
+        <p class="eyebrow">CASI TUYO</p>
+        <h2>Completa tu <em>pedido</em></h2>
+        <p class="dialog-intro">Déjanos tus datos y enviaremos el pedido al WhatsApp del negocio que elijas.</p>
+        <label for="customer-name">Tu nombre</label>
+        <input id="customer-name" name="name" autocomplete="name" required placeholder="¿Cómo te llamas?" />
+        <label for="business-whatsapp">¿A qué WhatsApp enviamos tu pedido?</label>
+        <select id="business-whatsapp" name="businessWhatsapp" required>
+          <option value="5493878759878">Sara · +54 9 387 875-9878</option>
+          <option value="5493878415462">Joaquín · +54 9 387 841-5462</option>
+        </select>
+        <label for="customer-note">Nota para tu pedido <span>(opcional)</span></label>
+        <textarea id="customer-note" name="note" rows="3" placeholder="Tonos, consultas o zona de entrega"></textarea>
+        <button class="button button-dark checkout-button" type="submit">Enviar pedido por WhatsApp <span>↗</span></button>
+        <p class="form-hint" id="form-hint" aria-live="polite"></p>
+      </form>
+    </dialog>
+
+    <dialog class="product-dialog" id="product-dialog" aria-labelledby="product-dialog-title">
+      <button class="icon-button product-dialog-close" id="close-product-dialog" type="button" aria-label="Cerrar imagen ampliada">×</button>
+      <img id="product-dialog-image" src="" alt="" />
+      <h2 id="product-dialog-title"></h2>
+      <p id="product-dialog-price"></p>
+    </dialog>
+  </body>
+</html>

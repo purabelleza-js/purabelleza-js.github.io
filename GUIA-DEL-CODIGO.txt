@@ -1,0 +1,154 @@
+GUIA PRACTICA PARA EDITAR PURA BELLESA JS
+
+No hace falta entender todo el codigo para hacer cambios comunes. Abre la carpeta del sitio en Visual Studio Code y busca el texto o selector indicado con Ctrl+F. Cambia solo lo necesario, guarda con Ctrl+S y recarga la pagina con Ctrl+F5.
+
+QUE ARCHIVO EDITAR
+
+- index.html: textos, fotos del logo/portada, enlaces y estructura de las secciones.
+- styles.css: colores, tamanos, espacios, distribucion, botones y adaptacion a celulares.
+- app.js: lista de productos, precios, fotos del catalogo, filtros, carrito y pedido por WhatsApp.
+- images: fotos de los productos. El nombre del archivo debe coincidir con la ruta indicada en app.js.
+- assets: imagenes de marca usadas en el encabezado y la portada.
+
+CAMBIAR UN TEXTO
+
+1. Abre index.html y busca una parte del texto con Ctrl+F.
+2. Reemplaza solo las palabras que estan entre las etiquetas, sin borrar las etiquetas HTML.
+
+Ejemplo:
+  <h2>Un poquito de <em>magia</em></h2>
+Puedes cambiar las palabras y conservar <h2>, </h2>, <em> y </em>.
+
+Textos y secciones que puedes buscar en index.html:
+- "announcement": mensaje de la franja superior.
+- "site-header": marca, menu y boton del carrito.
+- "hero": portada, titulo, descripcion y boton.
+- "hero-note": frase "Belleza simple, hecha para disfrutar".
+- "shop-section" o id="productos": encabezado, filtros y catalogo.
+- "brand-story" o id="nosotras": seccion "Nuestra esencia".
+- "contact-section" o id="pedidos": pedidos y consultas.
+- "site-footer": pie de pagina.
+- "cart-panel" y "checkout-dialog": carrito y formulario del pedido.
+
+CAMBIAR COLORES, LETRAS Y TAMANOS
+
+Todo esto se cambia en styles.css. Busca el selector que corresponda y cambia el valor entre las llaves. No borres el punto del selector, las llaves ni el punto y coma final.
+
+Ejemplo para agrandar una frase:
+  .hero-note { font-size: 18px; }
+Cambia 18px por el tamano que quieras. Para colores puedes usar un codigo hexadecimal, como #7650a5.
+
+Colores principales: busca ":root" al principio de styles.css.
+- --ink: color oscuro de textos y botones.
+- --muted: color de textos secundarios.
+- --rose: acento rosa.
+- --purple: acento violeta.
+- --paper: fondo claro principal.
+- --line: bordes suaves.
+Puedes reemplazar el codigo de color despues de los dos puntos, por ejemplo:
+  --rose: #c65c9b;
+
+Selectores utiles de styles.css:
+- ".announcement": franja superior, color y tamano de texto.
+- ".brand-logo": logo del encabezado y del pie; ".hero-logo": imagen grande de la portada.
+- ".main-nav": menu de navegacion.
+- "h1": titulo principal de la portada; "h2": titulos de seccion.
+- ".hero-description" y ".hero-note": textos secundarios de la portada.
+- ".section-heading > p": frase "Esenciales para jugar, crear y sentirte increible".
+- ".product-name", ".product-price", ".product-rating" y ".add-button": nombre, precio, frase y boton de producto.
+- ".product-image": foto en la tarjeta de producto.
+- ".contact-card": tarjetas de pedidos y consultas.
+- ".cart-panel" y ".checkout-dialog": panel del carrito y formulario.
+
+Unidades comunes:
+- font-size: tamano de letra, normalmente en px.
+- width y height: ancho y alto.
+- padding: espacio dentro de un elemento.
+- margin: espacio alrededor de un elemento.
+- gap: espacio entre elementos.
+- border-radius: redondez de bordes.
+- clamp(minimo, adaptable, maximo): tamano que cambia segun el ancho de pantalla.
+Por ejemplo, cambiar font-size: 14px por font-size: 18px agranda el texto.
+
+La regla "@media (max-width: 760px)" contiene ajustes para celulares. Si un cambio se ve bien en computadora pero mal en celular, revisa si ese selector tiene otra regla dentro de esa seccion. En pantallas pequenas el menu principal se oculta y las columnas pasan a una sola columna.
+
+CAMBIAR UNA FOTO
+
+Logo o foto de portada:
+1. Copia la nueva imagen a assets.
+2. En index.html busca "brand-logo" para el logo y "hero-logo" para la imagen de portada.
+3. Cambia el valor de src por la ruta del archivo, por ejemplo src="assets/mi-foto.jpg".
+4. El logo del pie usa tambien "brand-logo"; cambia su src si quieres que coincida.
+
+Foto de un producto:
+1. Copia la foto a images. Usa un nombre corto, sin espacios y facil de reconocer.
+2. Abre app.js y busca el producto dentro de "const products = [".
+3. Cambia su propiedad image por la ruta, por ejemplo image: "images/sombra-violeta.jpg".
+4. Cambia alt por una descripcion breve de lo que aparece en la foto.
+
+La ruta, el nombre y la extension (.jpg, .png, etc.) deben coincidir exactamente. Para cambiar una foto conservando el mismo nombre de archivo, basta con reemplazar ese archivo por la nueva imagen.
+
+En las tarjetas del catalogo, ".product-image" usa "object-fit: cover", que llena el espacio y puede recortar un poco la foto. Usa "object-fit: contain" si necesitas mostrar la imagen completa. Esa regla afecta a todas las fotos de producto.
+
+AGREGAR UN PRODUCTO
+
+Para instrucciones detalladas y un ejemplo de ficha listo para copiar, abre images/INSTRUCCIONES.txt. En resumen:
+1. Guarda la imagen dentro de images.
+2. En app.js agrega una ficha dentro de "const products = [".
+3. Completa id unico, name, category, price, tag, image y alt.
+4. Usa una categoria existente: "Rostro", "Labios", "Ojos", "Accesorios" o "Uñas".
+5. El precio es un numero sin signo de pesos ni separador, por ejemplo price: 5200.
+
+MARCAR UN PRODUCTO COMO AGOTADO
+
+1. Abre app.js y busca la ficha del producto dentro de "const products = [".
+2. Dentro de ese producto, agrega la linea available: false, por ejemplo debajo de id:
+   id: "corrector-baoshi",
+   available: false,
+   name: "Corrector Baoshi",
+3. Guarda los cambios y recarga la pagina. El producto seguira visible, pero aparecera como "Agotado" y no se podra agregar al pedido.
+4. Cuando vuelva a haber stock, cambia false por true o elimina la propiedad available.
+
+Si agregas una categoria nueva, agrega tambien un boton con el mismo valor en data-category en index.html. Si los nombres no coinciden exactamente, el filtro no funcionara.
+
+ADMINISTRAR EL CATALOGO CON GOOGLE SHEETS
+
+Puedes usar una hoja de calculo para cambiar productos y precios sin editar el codigo por cada cambio. La conexion se configura una vez. La hoja publicada permite que cualquier persona vea los datos del catalogo, asi que no incluyas informacion privada.
+
+1. Abre catalogo-productos.csv en Excel o Google Sheets e importalo como una hoja. Tambien puedes crear una hoja y copiar las filas del archivo. Conserva exactamente los encabezados: id, name, category, price, tag, image, alt, stock, available.
+2. Primero prueba editando el precio o stock de un producto existente. Para agregar productos, agrega una fila completa con un id unico (letras, numeros o guiones), nombre, categoria, precio en pesos sin separadores (o deja price vacio), etiqueta, imagen, texto alternativo, cantidad en stock y disponibilidad. Las categorias disponibles son Rostro, Labios, Ojos, Accesorios y Uñas. Puedes usar cantidades exactas; ten presente que la hoja publicada es visible para cualquiera que tenga el enlace. Usa stock 0 para agotado. No borres ni cambies los encabezados. La columna available se conserva para compatibilidad; si stock tiene un numero, el stock es el que determina el estado.
+3. En Google Sheets abre Archivo > Compartir > Publicar en la web. Elige la hoja que contiene el catalogo y el formato CSV, luego pulsa Publicar y confirma. Copia el enlace CSV publicado.
+4. Abre catalog-config.js y asigna el enlace CSV publicado a CATALOG_CSV_URL, conservando las comillas:
+   window.CATALOG_CSV_URL = "PEGA_AQUI_EL_ENLACE_CSV_PUBLICADO";
+5. Publica una vez todos los archivos del sitio en Netlify, incluida catalog-config.js. A partir de ahi, para cambiar texto, precio o stock, edita la hoja y guarda. La tienda vuelve a leer los cambios al abrirse, al regresar a la pestaña o cada cinco minutos; la publicacion de Google puede tardar un momento en reflejarlos. La hoja publicada es de solo lectura y visible para cualquiera que tenga el enlace, incluidas las cantidades exactas.
+
+En image puedes conservar las rutas images/... para los productos actuales. Para un producto nuevo, puedes usar una URL publica directa de una imagen (https://...). Si usas una foto que solo esta en tu computadora, primero tendras que subirla al sitio; una hoja de calculo no puede publicar un archivo local por si sola.
+
+Si una fila esta incompleta o tiene un dato no valido, la tienda muestra un aviso y conserva el ultimo catalogo valido, en lugar de reemplazarlo por una pagina vacia. Corrige esa fila en Google Sheets y vuelve a cargar la tienda. Si la hoja no carga, confirma que la publicaste en formato CSV y que pegaste el enlace de publicacion, no el enlace normal para editar o compartir. Si CATALOG_CSV_URL queda vacio, la pagina usa el catalogo incluido en app.js.
+
+AGREGAR UNA SECCION NUEVA
+
+Una seccion visible normalmente necesita tres cambios:
+1. En index.html agrega el contenido dentro de <main>, usando una etiqueta <section> y un id unico. Ejemplo: <section id="promos"> ... </section>.
+2. Si quieres que se pueda encontrar desde el menu, agrega dentro de <nav class="main-nav"> un enlace <a href="#promos">Promociones</a>. El valor despues de # debe ser igual al id de la seccion.
+3. En styles.css agrega reglas usando una clase propia para darle apariencia. Por ejemplo, si la seccion tiene class="promo-section", crea una regla .promo-section { ... }.
+
+Puedes copiar una seccion existente que se parezca y cambiar su texto, id y clases. Conserva las etiquetas de apertura y cierre. Revisa como se ve en computadora y en celular; puedes agregar ajustes para esa clase dentro de "@media (max-width: 760px)".
+
+Agregar una parte interactiva, como un boton que cambie contenido, requiere ademas programar su comportamiento en app.js. No basta con dibujar el boton en HTML. Para cambios de carrito, filtros o WhatsApp, conviene modificar junto con cuidado la estructura y la logica relacionada.
+
+CAMBIAR WHATSAPP Y MONEDA
+
+- Los enlaces de consulta estan en index.html. El numero de wa.me debe escribirse con codigo de pais, sin espacios ni signos.
+- Para el formulario del pedido, los numeros deben coincidir en las opciones de index.html y en "BUSINESS_WHATSAPP_NUMBERS" al principio de app.js. Si cambias o agregas un numero, actualiza ambos lugares.
+- "CURRENCY" en app.js indica la moneda del formato de precios. Cambiar la moneda no convierte los precios; revisa tambien cada valor price de los productos.
+
+COMPROBAR LOS CAMBIOS
+
+1. Cambia una cosa por vez y guarda el archivo.
+2. Recarga con Ctrl+F5. Si abres el sitio localmente, puedes abrir index.html en el navegador.
+3. Revisa el resultado tanto en una ventana ancha como en celular o usando la vista adaptable del navegador.
+4. Prueba los botones y enlaces que hayas cambiado. En particular, prueba filtros, agregar al carrito y el formulario si editaste esas partes.
+5. Si algo se rompe, deshaz con Ctrl+Z en el archivo que acabas de cambiar. Comprueba que sigan presentes las comillas, comas, llaves { }, etiquetas de cierre y puntos y coma.
+
+Si un cambio no se refleja, comprueba que editaste el archivo correcto, que guardaste y que el nombre de la clase, id o foto coincide exactamente. Con Google Sheets configurado, los cambios del catalogo se leen desde la hoja al recargar la tienda; los cambios al codigo (textos, estilos o funciones) requieren volver a publicar los archivos en Netlify.

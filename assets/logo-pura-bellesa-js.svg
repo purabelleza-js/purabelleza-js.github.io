@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 132" fill="none" role="img" aria-labelledby="logo-title logo-description">
+  <title id="logo-title">Pura belleza JS</title>
+  <desc id="logo-description">Logotipo floral en tonos rosa y violeta con un detalle sonriente.</desc>
+  <defs>
+    <linearGradient id="petal" x1="20" y1="18" x2="105" y2="108" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D978B0"/>
+      <stop offset="1" stop-color="#8655AD"/>
+    </linearGradient>
+    <linearGradient id="wordmark" x1="160" y1="41" x2="461" y2="91" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A84D91"/>
+      <stop offset="1" stop-color="#64417D"/>
+    </linearGradient>
+  </defs>
+  <circle cx="66" cy="66" r="58" fill="#F7EAF7"/>
+  <circle cx="66" cy="66" r="55.5" stroke="#D8B6DC"/>
+  <g fill="url(#petal)">
+    <ellipse cx="66" cy="36" rx="11" ry="20"/>
+    <ellipse cx="66" cy="36" rx="11" ry="20" transform="rotate(60 66 66)"/>
+    <ellipse cx="66" cy="36" rx="11" ry="20" transform="rotate(120 66 66)"/>
+    <ellipse cx="66" cy="36" rx="11" ry="20" transform="rotate(180 66 66)"/>
+    <ellipse cx="66" cy="36" rx="11" ry="20" transform="rotate(240 66 66)"/>
+    <ellipse cx="66" cy="36" rx="11" ry="20" transform="rotate(300 66 66)"/>
+  </g>
+  <circle cx="66" cy="66" r="13" fill="#F2C46F"/>
+  <path d="M57 69c2.4 3.2 5.4 4.8 9 4.8s6.6-1.6 9-4.8" stroke="#684174" stroke-linecap="round" stroke-width="2.8"/>
+  <circle cx="39" cy="49" r="2" fill="#fff"/>
+  <circle cx="93" cy="82" r="2" fill="#fff"/>
+  <text x="146" y="69" fill="url(#wordmark)" font-family="Georgia, 'Times New Roman', serif" font-size="41" font-weight="700" letter-spacing="-1.8">Pura belleza</text>
+  <text x="442" y="68" fill="#A84D91" font-family="Georgia, 'Times New Roman', serif" font-size="31" font-style="italic">JS</text>
+  <path d="M149 83h333" stroke="#DCC8E1" stroke-width="1.5"/>
+  <text x="151" y="108" fill="#543E60" font-family="Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="1.8">BELLEZA CON ALEGRÍA</text>
+</svg>
