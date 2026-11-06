@@ -120,7 +120,7 @@ Puedes usar una hoja de calculo para cambiar productos y precios sin editar el c
 3. En Google Sheets abre Archivo > Compartir > Publicar en la web. Elige la hoja que contiene el catalogo y el formato CSV, luego pulsa Publicar y confirma. Copia el enlace CSV publicado.
 4. Abre catalog-config.js y asigna el enlace CSV publicado a CATALOG_CSV_URL, conservando las comillas:
    window.CATALOG_CSV_URL = "PEGA_AQUI_EL_ENLACE_CSV_PUBLICADO";
-5. Publica una vez todos los archivos del sitio en Netlify, incluida catalog-config.js. A partir de ahi, para cambiar texto, precio o stock, edita la hoja y guarda. La tienda vuelve a leer los cambios al abrirse, al regresar a la pestaña o cada cinco minutos; la publicacion de Google puede tardar un momento en reflejarlos. La hoja publicada es de solo lectura y visible para cualquiera que tenga el enlace, incluidas las cantidades exactas.
+5. Publica una vez todos los archivos del sitio en tu hosting (por ejemplo, GitHub Pages o Netlify), incluida catalog-config.js. A partir de ahi, para cambiar texto, precio o stock, edita la hoja y guarda. La tienda vuelve a leer los cambios al abrirse, al regresar a la pestaña o cada cinco minutos; la publicacion de Google puede tardar un momento en reflejarlos. La hoja publicada es de solo lectura y visible para cualquiera que tenga el enlace, incluidas las cantidades exactas.
 
 En image puedes conservar las rutas images/... para los productos actuales. Para un producto nuevo, puedes usar una URL publica directa de una imagen (https://...). Si usas una foto que solo esta en tu computadora, primero tendras que subirla al sitio; una hoja de calculo no puede publicar un archivo local por si sola.
 
