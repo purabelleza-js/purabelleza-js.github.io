@@ -133,6 +133,7 @@ Los cambios hechos en los archivos de tu computadora no aparecen en la pagina pu
 4. Arrastra desde tu computadora solo los archivos modificados. Si agregaste una foto, incluye tambien esa foto; conserva su carpeta (por ejemplo, images/nueva-foto.jpg).
 5. Espera a que termine la carga. GitHub mostrara los archivos que va a agregar o reemplazar. Comprueba que sean los correctos y pulsa "Commit changes" para guardar los cambios en el repositorio.
 6. GitHub Pages publica el sitio automaticamente. Espera unos minutos y abre https://purabelleza-js.github.io/; recarga con Ctrl+F5 para ver la version nueva.
+7. Si modificaste app.js y en el celular sigue apareciendo la version anterior, sube tambien index.html. Su etiqueta de app.js incluye un numero de version que se cambia para que el navegador descargue el archivo actualizado.
 
 No pegues el contenido del sitio en Google Sheets ni vuelvas a subir todo si solo cambiaste un archivo. Sheets se usa unicamente para administrar precios y stock. Los archivos del sitio, como app.js, index.html, styles.css y las fotos, se actualizan en GitHub.
 
