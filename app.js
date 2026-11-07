@@ -180,7 +180,7 @@ const initialProducts = [
     price:16000,
     stock:1,
     tag:"",
-    image:"images/libro_pestanas_10Vol_a_14Vol_x2.jpg",
+    image:"images/libro_pestana_10Vol_a_14Vol_x2.jpg",
     alt:"Libro de pestañas 10Vol a 14Vol x2",
   }
 ];
