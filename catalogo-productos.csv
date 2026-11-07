@@ -1,15 +1,17 @@
-id,name,category,price,tag,image,alt,stock,available
-corrector-baoshi,Corrector Baoshi,Rostro,2500,,images/Corrector.jpg,Corrector Baoshi en barra,1,true
-mascara-miss-betty,Máscara de pestañas Miss Betty,Ojos,2000,,images/Rimel_volu.jpg,Máscaras de pestañas Miss Betty para largo y volumen,2,true
-lip-gloss-lip-oil,"Lip gloss y lip oil (4 modelos)(Por unidad)",Labios,1500,,images/Gloss.jpg,Cuatro modelos de lip gloss y lip oil,3,true
-mascarillas-faciales,Mascarillas faciales Capybara y Centella Asiática,Rostro,2000,,images/Mascarilla.jpg,Mascarillas faciales Capybara y de Centella Asiática,2,true
-delineador-magnetico,Delineador Retactil Romantic Rain,Ojos,2000,,images/delineador_de_ojos_Magnetico.jpg,Delineador magnético negro Romantic Rain,2,true
-balsamo-chanchito,Bálsamo labial Chanchito,Labios,2000,,images/Balsamo_chanchito.jpg,Bálsamo labial hidratante con envase de chanchito rosa,1,true
-delineador-ultra-fino,Delineador ultra fino negro,Ojos,2000,,images/Delineador_de_ojos.jpg,"Delineador negro ultra fino, tono 1001",2,true
-pestanas-8d,Pestañas 8D,Ojos,2000,,images/pestañas_8D.jpg,Pestañas postizas 8D reutilizables,1,true
-labial-miss-betty,Labial Miss Betty,Labios,2500,,images/Labial_Mate.jpg,Labial Miss Betty de color duradero,1,true
-parches-acne,Parches para el acné,Rostro,2000,,images/Parche_de_acne.jpg,Parches faciales para granitos de día y noche,0,false
-unas-press-on,Uñas press on celestes y rosas,Uñas,2000,,images/Uñas_efecto_gato.jpg,Uñas press on en color celeste y rosa,1,true
-Toallitas_Humedas,Toallitas humedas,Rostro,1500,,images/Toallitas_Humedas.jpg,Toallitas humedas para el rostro,1,true
-Gloss_Rosa_Con_Brillo,Gloss rosa con brillo,Labios,2500,,images/Gloss_Rosa_Con_Brillo.jpg,Gloss rosado con brillo,0,false
-Gloss_rojo,Gloss rojo,Labios,2500,,images/Gloss_rojo.jpg,Gloss rojo,1,true
+id,price,stock
+corrector-baoshi,2500,0
+mascara-miss-betty,2000,2
+lip-gloss-lip-oil,1500,3
+mascarillas-faciales,2000,2
+delineador-magnetico,2000,2
+balsamo-chanchito,2000,1
+delineador-ultra-fino,2000,2
+pestanas-8d,2000,1
+labial-miss-betty,2500,1
+parches-acne,2000,0
+unas-press-on,2000,1
+Toallitas_Humedas,1500,0
+Gloss_Rosa_Con_Brillo,2500,0
+Gloss_rojo,2500,1
+Arqueadores_de_pestanas,2000,2
+delineadores_de_labios,2000,5

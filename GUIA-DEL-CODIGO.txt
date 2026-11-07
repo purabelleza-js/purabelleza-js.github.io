@@ -6,7 +6,7 @@ QUE ARCHIVO EDITAR
 
 - index.html: textos, fotos del logo/portada, enlaces y estructura de las secciones.
 - styles.css: colores, tamanos, espacios, distribucion, botones y adaptacion a celulares.
-- app.js: lista de productos, precios, fotos del catalogo, filtros, carrito y pedido por WhatsApp.
+- app.js: productos y sus fotos; filtros, carrito y pedido por WhatsApp. El precio y el stock se actualizan desde Google Sheets.
 - images: fotos de los productos. El nombre del archivo debe coincidir con la ruta indicada en app.js.
 - assets: imagenes de marca usadas en el encabezado y la portada.
 
@@ -82,7 +82,7 @@ Logo o foto de portada:
 
 Foto de un producto:
 1. Copia la foto a images. Usa un nombre corto, sin espacios y facil de reconocer.
-2. Abre app.js y busca el producto dentro de "const products = [".
+2. Abre app.js y busca el producto dentro de "const initialProducts = [".
 3. Cambia su propiedad image por la ruta, por ejemplo image: "images/sombra-violeta.jpg".
 4. Cambia alt por una descripcion breve de lo que aparece en la foto.
 
@@ -94,37 +94,32 @@ AGREGAR UN PRODUCTO
 
 Para instrucciones detalladas y un ejemplo de ficha listo para copiar, abre images/INSTRUCCIONES.txt. En resumen:
 1. Guarda la imagen dentro de images.
-2. En app.js agrega una ficha dentro de "const products = [".
-3. Completa id unico, name, category, price, tag, image y alt.
+2. En app.js agrega una ficha dentro de "const initialProducts = [".
+3. Completa id unico, name, category, price, stock, tag, image y alt.
 4. Usa una categoria existente: "Rostro", "Labios", "Ojos", "Accesorios" o "Uñas".
-5. El precio es un numero sin signo de pesos ni separador, por ejemplo price: 5200.
+5. Price y stock son valores iniciales para usar si la hoja no tiene una fila para ese producto. Para administrarlos desde Sheets, agrega tambien una fila con su id, precio y stock.
 
 MARCAR UN PRODUCTO COMO AGOTADO
 
-1. Abre app.js y busca la ficha del producto dentro de "const products = [".
-2. Dentro de ese producto, agrega la linea available: false, por ejemplo debajo de id:
-   id: "corrector-baoshi",
-   available: false,
-   name: "Corrector Baoshi",
-3. Guarda los cambios y recarga la pagina. El producto seguira visible, pero aparecera como "Agotado" y no se podra agregar al pedido.
-4. Cuando vuelva a haber stock, cambia false por true o elimina la propiedad available.
+1. En Google Sheets, busca la fila del producto.
+2. Cambia su stock a 0 para que aparezca como agotado. El stock debe ser un numero entero mayor o igual que cero.
+3. Si todavia no administras el producto desde Sheets, abre app.js y cambia stock a 0 dentro de su ficha en "const initialProducts = [".
+4. Guarda los cambios y recarga la pagina. El producto seguira visible, pero aparecera como "Agotado" y no se podra agregar al pedido.
 
 Si agregas una categoria nueva, agrega tambien un boton con el mismo valor en data-category en index.html. Si los nombres no coinciden exactamente, el filtro no funcionara.
 
 ADMINISTRAR EL CATALOGO CON GOOGLE SHEETS
 
-Puedes usar una hoja de calculo para cambiar productos y precios sin editar el codigo por cada cambio. La conexion se configura una vez. La hoja publicada permite que cualquier persona vea los datos del catalogo, asi que no incluyas informacion privada.
+Puedes usar una hoja de calculo para cambiar precios y stock sin editar el codigo por cada cambio. Los productos, nombres, categorias y fotos se definen en el sitio. La conexion se configura una vez. La hoja publicada permite que cualquier persona vea los datos del catalogo, asi que no incluyas informacion privada.
 
-1. Abre catalogo-productos.csv en Excel o Google Sheets e importalo como una hoja. Tambien puedes crear una hoja y copiar las filas del archivo. Conserva exactamente los encabezados: id, name, category, price, tag, image, alt, stock, available.
-2. Primero prueba editando el precio o stock de un producto existente. Para agregar productos, agrega una fila completa con un id unico (letras, numeros o guiones), nombre, categoria, precio en pesos sin separadores (o deja price vacio), etiqueta, imagen, texto alternativo, cantidad en stock y disponibilidad. Las categorias disponibles son Rostro, Labios, Ojos, Accesorios y Uñas. Puedes usar cantidades exactas; ten presente que la hoja publicada es visible para cualquiera que tenga el enlace. Usa stock 0 para agotado. No borres ni cambies los encabezados. La columna available se conserva para compatibilidad; si stock tiene un numero, el stock es el que determina el estado.
+1. Abre catalogo-productos.csv en Excel o Google Sheets e importalo como una hoja. Tambien puedes crear una hoja con tres columnas. Los unicos encabezados necesarios son: id, price y stock.
+2. En Sheets solo se administran el precio y el stock: no agregues nombres, categorias ni fotos. Cada fila debe tener el id exacto del producto (se encuentra en app.js), un precio en pesos sin separadores (puede quedar vacio si aun no se confirma) y un stock entero igual o mayor que cero. Usa stock 0 para agotado. Puedes dejar las columnas antiguas de name, category, tag, image, alt o available si ya existen; la tienda las ignora. No cambies los IDs.
 3. En Google Sheets abre Archivo > Compartir > Publicar en la web. Elige la hoja que contiene el catalogo y el formato CSV, luego pulsa Publicar y confirma. Copia el enlace CSV publicado.
 4. Abre catalog-config.js y asigna el enlace CSV publicado a CATALOG_CSV_URL, conservando las comillas:
    window.CATALOG_CSV_URL = "PEGA_AQUI_EL_ENLACE_CSV_PUBLICADO";
-5. Publica una vez todos los archivos del sitio en tu hosting (por ejemplo, GitHub Pages o Netlify), incluida catalog-config.js. A partir de ahi, para cambiar texto, precio o stock, edita la hoja y guarda. La tienda vuelve a leer los cambios al abrirse, al regresar a la pestaña o cada cinco minutos; la publicacion de Google puede tardar un momento en reflejarlos. La hoja publicada es de solo lectura y visible para cualquiera que tenga el enlace, incluidas las cantidades exactas.
+5. Publica una vez todos los archivos del sitio en tu hosting (por ejemplo, GitHub Pages o Netlify), incluida catalog-config.js. A partir de ahi, edita la hoja para cambiar precio o stock. Para agregar un producto nuevo, primero agrega sus datos y foto en app.js y la carpeta images, y despues agrega en Sheets una fila con solo id, price y stock. La tienda vuelve a leer los cambios al abrirse, al regresar a la pestaña o cada cinco minutos; la publicacion de Google puede tardar un momento en reflejarlos. La hoja publicada es de solo lectura y visible para cualquiera que tenga el enlace, incluidas las cantidades exactas.
 
-En image puedes conservar las rutas images/... para los productos actuales. Para un producto nuevo, puedes usar una URL publica directa de una imagen (https://...). Si usas una foto que solo esta en tu computadora, primero tendras que subirla al sitio; una hoja de calculo no puede publicar un archivo local por si sola.
-
-Si una fila esta incompleta o tiene un dato no valido, la tienda muestra un aviso y conserva el ultimo catalogo valido, en lugar de reemplazarlo por una pagina vacia. Corrige esa fila en Google Sheets y vuelve a cargar la tienda. Si la hoja no carga, confirma que la publicaste en formato CSV y que pegaste el enlace de publicacion, no el enlace normal para editar o compartir. Si CATALOG_CSV_URL queda vacio, la pagina usa el catalogo incluido en app.js.
+La tienda solo lee id, price y stock; ignora las demas columnas aunque la hoja antigua las conserve. Si una fila tiene un dato no valido, la tienda muestra un aviso y usa los datos iniciales definidos en app.js. Corrige esa fila en Google Sheets y vuelve a cargar la tienda. Si la hoja no carga, confirma que la publicaste en formato CSV y que pegaste el enlace de publicacion, no el enlace normal para editar o compartir. Si CATALOG_CSV_URL queda vacio, la pagina usa el catalogo y los valores iniciales incluidos en app.js.
 
 AGREGAR UNA SECCION NUEVA
 

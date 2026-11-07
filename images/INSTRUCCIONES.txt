@@ -1,37 +1,22 @@
 AGREGAR UN PRODUCTO AL CATALOGO
 
-1. Copia la foto real del producto en esta carpeta: images.
-2. Ponle un nombre corto y sin espacios, por ejemplo: sombra-violeta.jpg.
-3. Abre app.js con Visual Studio Code.
-4. Busca la lista "const products = [".
-5. Agrega una ficha nueva dentro de los corchetes. Si ya hay otro producto, pon una coma después de su cierre "}," y pega la ficha siguiente:
+1. Copia la foto del producto en esta carpeta. Usa un nombre corto y sin espacios, por ejemplo sombra-violeta.jpg.
+2. Abre app.js y busca "const initialProducts = [".
+3. Agrega una ficha con un id unico, nombre, categoria, precio y stock iniciales, etiqueta, ruta de imagen y texto alternativo. Ejemplo:
 
   {
     id: "sombra-violeta",
     name: "Sombra violeta",
     category: "Ojos",
     price: 5200,
+    stock: 3,
     tag: "",
     image: "images/sombra-violeta.jpg",
     alt: "Paleta de sombras violetas",
   },
 
-6. Cambia los datos del ejemplo:
-   - id: identificador único, en minúsculas y sin espacios.
-   - name: nombre que verán tus clientes.
-   - category: usa "Rostro", "Labios", "Ojos" o "Accesorios".
-   - price: precio en pesos como número, sin signo $ ni puntos.
-   - tag: déjalo como "" si no quieres una etiqueta.
-   - image: ruta de la foto dentro de la carpeta images.
-   - alt: descripción breve que corresponda a esa foto.
-7. Guarda app.js con Ctrl+S y recarga index.html con Ctrl+F5.
+4. Usa una categoria existente: "Rostro", "Labios", "Ojos", "Accesorios" o "Uñas". Si agregas una categoria nueva, agrega tambien su filtro en index.html.
+5. Guarda app.js y recarga index.html con Ctrl+F5.
+6. Para administrar el precio y el stock desde Google Sheets, agrega una fila con el mismo id, precio y cantidad de stock. La hoja solo necesita las columnas id, price y stock; no agregues ahi el nombre ni la imagen. Si el producto no tiene fila en Sheets, se usan su precio y stock iniciales de app.js.
 
-El producto aparecerá en el catálogo con su foto, nombre y precio. El botón "Agregar al pedido" lo incluye en el carrito y el pedido de WhatsApp llevará el producto, la cantidad y el precio.
-
-IMPORTANTE
-- No borres las fichas de otros productos al agregar uno nuevo.
-- Cada id debe ser diferente.
-- La categoría debe coincidir exactamente con una de las categorías disponibles para que aparezca al filtrar.
-- Si agregas una categoría nueva, también agrega un botón de filtro con ese nombre en index.html.
-- Usa imágenes locales; no hace falta poner enlaces de imágenes de internet.
-- Al publicar cambios en internet, vuelve a subir/desplegar los archivos actualizados del sitio.
+La ruta, el nombre y la extension de la foto deben coincidir exactamente. Al publicar cambios en internet, vuelve a subir/desplegar los archivos actualizados del sitio.

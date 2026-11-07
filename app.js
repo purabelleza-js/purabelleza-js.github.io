@@ -142,8 +142,26 @@ const initialProducts = [
     tag: "",
     image: "images/Gloss_rojo.jpg",
     alt: "Gloss Rojo ",
-
-
+  },
+  {
+    id:"Arqueadores_de_pestanas",
+    name:"Arqueadores de pestañas",
+    category:"Ojos",
+    price:2000,
+    stock:2,
+    tag:"",
+    image:"images/Arqueadores_de_pestanas.jpg",
+    alt:"Arqueadores de pestañas",
+  },
+  {
+    id:"delineadores_de_labios",
+    name:"Delineadores de labios",
+    category:"Labios",
+    price:2000,
+    stock:5,
+    tag:"",
+    image:"images/delineadores_de_labios.jpg",
+    alt:"Delineadores de labios",
   }
 ];
 
@@ -233,13 +251,12 @@ function parseCsv(text) {
   if (rows.length < 2) throw new Error("La hoja no tiene productos para mostrar.");
 
   const headers = rows[0].map((header) => header.replace(/^\uFEFF/, "").trim().toLowerCase());
-  const requiredHeaders = ["id", "name", "category", "price", "tag", "image", "alt", "available"];
+  const requiredHeaders = ["id", "price", "stock"];
   const missingHeaders = requiredHeaders.filter((header) => !headers.includes(header));
   if (missingHeaders.length) throw new Error(`Faltan columnas en la hoja: ${missingHeaders.join(", ")}.`);
 
-  const categories = new Set([...document.querySelectorAll(".filter-chip")].map((button) => button.dataset.category));
   const ids = new Set();
-  return rows.slice(1).map((cells, rowIndex) => {
+  return new Map(rows.slice(1).map((cells, rowIndex) => {
     const values = Object.fromEntries(headers.map((header, index) => [header, (cells[index] ?? "").trim()]));
     const id = values.id;
     const rowNumber = rowIndex + 2;
@@ -252,39 +269,19 @@ function parseCsv(text) {
         ? rawPrice.replace(/[.,]/g, "")
         : rawPrice.replace(",", ".");
     const price = values.price === "" ? null : Number(normalizedPrice);
-    const stockValue = values.stock?.trim() ?? "";
-    const stock = stockValue === "" ? null : Number(stockValue);
-    const available = values.available.toLowerCase();
-    const image = values.image.replace(/^im(?:a|á)g(?:en)?es\//i, "images/");
+    const stock = Number(values.stock);
 
     if (!/^[\w-]+$/.test(id)) throw new Error(`El ID de la fila ${rowNumber} está vacío o no es válido.`);
     if (ids.has(id)) throw new Error(`El ID "${id}" está repetido en la fila ${rowNumber}.`);
-    if (!values.name) throw new Error(`Falta el nombre del producto en la fila ${rowNumber}.`);
-    if (!categories.has(values.category) || values.category === "Todos") {
-      throw new Error(`La categoría de la fila ${rowNumber} no coincide con los filtros de la tienda.`);
-    }
     if (values.price !== "" && (!Number.isFinite(price) || price < 0)) {
       throw new Error(`El precio de la fila ${rowNumber} debe ser un número igual o mayor que cero, o quedar vacío.`);
     }
-    if (stockValue !== "" && (!Number.isInteger(stock) || stock < 0)) {
+    if (values.stock === "" || !Number.isInteger(stock) || stock < 0) {
       throw new Error(`El stock de la fila ${rowNumber} debe ser un número entero igual o mayor que cero.`);
     }
-    if (!["true", "false", "si", "sí", "no"].includes(available)) {
-      throw new Error(`Disponible en la fila ${rowNumber} debe ser true o false.`);
-    }
     ids.add(id);
-    return {
-      id,
-      name: values.name,
-      category: values.category,
-      price,
-      stock,
-      tag: values.tag,
-      image,
-      alt: values.alt,
-      available: ["true", "si", "sí"].includes(available),
-    };
-  });
+    return [id, { price, stock }];
+  }));
 }
 
 async function loadProducts() {
@@ -304,8 +301,16 @@ async function loadProducts() {
     if (csv.trimStart().startsWith("<")) {
       throw new Error("El enlace no parece ser el CSV publicado. Copia el enlace de publicación en formato CSV.");
     }
-    products = parseCsv(csv);
-    catalogWarning = "";
+    const updates = parseCsv(csv);
+    const knownIds = new Set(initialProducts.map((product) => product.id));
+    const unknownIds = [...updates.keys()].filter((id) => !knownIds.has(id));
+    products = initialProducts.map((product) => {
+      const update = updates.get(product.id);
+      return update ? { ...product, ...update } : product;
+    });
+    catalogWarning = unknownIds.length
+      ? `Se ignoraron IDs que no existen en los productos del sitio: ${unknownIds.join(", ")}.`
+      : "";
     renderProducts();
     renderCart();
   } catch (error) {
@@ -428,25 +433,36 @@ function closeCart() {
 
 function buildOrderMessage(name, note) {
   const cartEntries = [...cart.entries()].filter(([id]) => isProductAvailable(findProduct(id)));
+  const productCount = cartEntries.reduce((total, [, quantity]) => total + quantity, 0);
   const lines = cartEntries.map(([id, quantity]) => {
     const product = findProduct(id);
-    return `• ${product.name} x${quantity} — ${
-      product.price == null ? "precio a confirmar" : formatPrice(product.price * quantity)
-    }`;
+    const unitPrice = product.price == null ? "A confirmar" : formatPrice(product.price);
+    const subtotal = product.price == null ? "A confirmar" : formatPrice(product.price * quantity);
+    return [
+      `*${product.name}*`,
+      `   Categoría: ${product.category}`,
+      `   Cantidad: ${quantity} × ${unitPrice}`,
+      `   Subtotal: ${subtotal}`,
+    ].join("\n");
   });
   const total = cartEntries.reduce((sum, [id, quantity]) => {
     return sum + (findProduct(id)?.price ?? 0) * quantity;
   }, 0);
   const hasUnpricedItems = cartEntries.some(([id]) => findProduct(id)?.price == null);
   return [
-    "¡Hola! Quiero hacer este pedido 💄",
+    "🦋💜 *PURA BELLEZA JS* 💜🦋",
+    "¡Hola! Quiero hacer este pedido:",
     "",
-    `Nombre: ${name}`,
+    `👤 *Nombre:* ${name}`,
+    `🛍️ *Productos:* ${productCount} ${productCount === 1 ? "unidad" : "unidades"} en ${cartEntries.length} ${cartEntries.length === 1 ? "producto" : "productos"}`,
+    "",
     ...lines,
-    `Subtotal: ${hasUnpricedItems ? "A confirmar" : formatPrice(total)}`,
-    note ? `Nota: ${note}` : "",
     "",
-    "¿Me cuentan opciones de envío y pago?",
+    `💜 *Total: ${hasUnpricedItems ? "A confirmar" : formatPrice(total)}*`,
+    note ? `📝 *Nota:* ${note}` : "",
+    "",
+    "¿Me cuentan las opciones de envío y pago?",
+    "¡Muchas gracias! 🦋💜",
   ]
     .filter(Boolean)
     .join("\n");
