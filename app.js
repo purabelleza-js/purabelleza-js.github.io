@@ -357,13 +357,13 @@ function renderProducts() {
               </button>` : ""}
               ${!available ? '<span class="product-tag">Agotado</span>' : product.tag ? `<span class="product-tag">${escapeHtml(product.tag)}</span>` : ""}
               <button class="add-button" type="button" data-add="${escapeHtml(product.id)}" aria-label="${available ? `Agregar ${escapeHtml(product.name)} al pedido` : `${escapeHtml(product.name)}, agotado`}" ${available ? "" : "disabled"}>
-                ${available ? 'Agregar al pedido <span aria-hidden="true">+</span>' : "Agotado"}
+                ${available ? 'Agregar al pedido <span aria-hidden="true">+</span>' : "Próximamente"}
             </button>
           </div>
           <div class="product-info">
             <p class="product-category">${escapeHtml(product.category)}</p>
             <h3 class="product-name">${escapeHtml(product.name)}</h3>
-            ${product.stock == null ? "" : `<p class="product-stock${product.stock === 0 ? " out-of-stock" : ""}">${product.stock === 0 ? "Agotado · 0 unidades" : `Quedan ${product.stock} ${product.stock === 1 ? "unidad" : "unidades"}`}</p>`}
+            ${product.stock == null ? "" : `<p class="product-stock${product.stock === 0 ? " out-of-stock" : ""}">${product.stock === 0 ? "Agotado · Próximamente" : `Quedan ${product.stock} ${product.stock === 1 ? "unidad" : "unidades"}`}</p>`}
             <div class="product-bottom">
               <span class="product-price">${displayPrice(product.price)}</span>
               <span class="product-rating">✳ elegido con cariño</span>

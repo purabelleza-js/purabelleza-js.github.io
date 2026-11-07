@@ -104,7 +104,7 @@ MARCAR UN PRODUCTO COMO AGOTADO
 1. En Google Sheets, busca la fila del producto.
 2. Cambia su stock a 0 para que aparezca como agotado. El stock debe ser un numero entero mayor o igual que cero.
 3. Si todavia no administras el producto desde Sheets, abre app.js y cambia stock a 0 dentro de su ficha en "const initialProducts = [".
-4. Guarda los cambios y recarga la pagina. El producto seguira visible, pero aparecera como "Agotado" y no se podra agregar al pedido.
+4. Guarda los cambios y recarga la pagina. El producto seguira visible como "Agotado · Próximamente" y no se podra agregar al pedido.
 
 Si agregas una categoria nueva, agrega tambien un boton con el mismo valor en data-category en index.html. Si los nombres no coinciden exactamente, el filtro no funcionara.
 
