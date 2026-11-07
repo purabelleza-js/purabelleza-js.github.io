@@ -1,8 +1,12 @@
 AGREGAR UN PRODUCTO AL CATALOGO
 
-1. Copia la foto del producto en esta carpeta. Usa un nombre corto y sin espacios, por ejemplo sombra-violeta.jpg.
-2. Abre app.js y busca "const initialProducts = [".
-3. Agrega una ficha con un id unico, nombre, categoria, precio y stock iniciales, etiqueta, ruta de imagen y texto alternativo. Ejemplo:
+Sigue todos estos pasos en orden. Un producto necesita una ficha en app.js y su foto en images. Si administras el stock con Google Sheets, tambien necesita una fila en la hoja publicada. Si falta uno de esos datos, puede aparecer sin foto o con precio/stock iniciales.
+
+1. Prepara la foto:
+   - Copiala dentro de la carpeta images.
+   - Usa un nombre unico, corto, en minusculas, sin espacios ni tildes; por ejemplo sombra-violeta.jpg.
+   - Conserva la extension real del archivo (.jpg, .png, etc.). El nombre debe coincidir exactamente con el que usaras en app.js.
+2. En app.js busca "const initialProducts = [" y agrega la ficha nueva antes del cierre de la lista (la linea "];"). Usa una coma despues de la ficha anterior. Ejemplo:
 
   {
     id: "sombra-violeta",
@@ -15,8 +19,23 @@ AGREGAR UN PRODUCTO AL CATALOGO
     alt: "Paleta de sombras violetas",
   },
 
-4. Usa una categoria existente: "Rostro", "Labios", "Ojos", "Accesorios" o "Uñas". Si agregas una categoria nueva, agrega tambien su filtro en index.html.
-5. Guarda app.js y recarga index.html con Ctrl+F5.
-6. Para administrar el precio y el stock desde Google Sheets, agrega una fila con el mismo id, precio y cantidad de stock. La hoja solo necesita las columnas id, price y stock; no agregues ahi el nombre ni la imagen. Si el producto no tiene fila en Sheets, se usan su precio y stock iniciales de app.js.
+3. Crea un ID nuevo para cada producto. Usa solo letras inglesas minusculas (a-z), numeros, guiones o guion bajo; no uses espacios, tildes, ñ ni signos. Ejemplos validos: "sombra-violeta", "labial_02". El ID no es el nombre visible y debe ser unico.
+4. Completa todos los campos:
+   - name: nombre que vera el cliente.
+   - category: usa exactamente "Rostro", "Labios", "Ojos", "Accesorios" o "Uñas".
+   - price y stock: valores de respaldo. Stock debe ser un entero igual o mayor que cero; con 0 el producto aparece agotado.
+   - image: ruta relativa a la carpeta del sitio, como "images/sombra-violeta.jpg".
+   - alt: descripcion breve de la foto.
+   - tag: etiqueta opcional; si no necesitas una, deja "".
+5. Si administras precios y stock en Google Sheets, agrega una fila a la misma hoja publicada con el ID, precio y stock. Conserva los encabezados id, price y stock. No crees una fila vacia ni cambies el ID. Editar catalogo-productos.csv en la computadora no actualiza la hoja publicada; ese archivo es solo una plantilla/copia.
+6. Prueba antes de publicar:
+   - Abre index.html en el navegador y recarga con Ctrl+F5.
+   - Confirma que aparece el producto, en la categoria correcta, con precio y stock esperados.
+   - Comprueba que la foto carga. Si no carga, compara letra por letra el nombre de image con el archivo dentro de images.
+   - Si usas Sheets, abre el enlace CSV publicado y confirma que tenga una fila con el ID, precio y stock. Si no aparece ahi, la pagina tampoco recibira el producto.
+7. Publica en GitHub los archivos modificados: app.js y la foto nueva dentro de images. Si modificaste app.js, tambien actualiza en index.html el numero de version de la etiqueta app.js (usa un valor nuevo, por ejemplo v=20261107-6) y sube index.html; esto ayuda a que los celulares no reutilicen el script anterior.
+8. Espera a que GitHub Pages termine de publicar. Recarga la web con Ctrl+F5; en celular, cierra y vuelve a abrir la pagina o prueba una pestaña privada.
 
-La ruta, el nombre y la extension de la foto deben coincidir exactamente. Al publicar cambios en internet, vuelve a subir/desplegar los archivos actualizados del sitio.
+Si agregas una categoria nueva, agrega tambien un filtro con el mismo valor en data-category en index.html. Si los nombres no coinciden exactamente, el filtro no funcionara.
+
+Si algo falla, revisa el aviso amarillo del catalogo. Un aviso sobre un ID indica que la fila de Sheets no coincide con los productos de app.js; un aviso sobre datos invalidos indica una fila incompleta o repetida. Corrige el dato indicado y recarga.

@@ -92,12 +92,13 @@ En las tarjetas del catalogo, ".product-image" usa "object-fit: cover", que llen
 
 AGREGAR UN PRODUCTO
 
-Para instrucciones detalladas y un ejemplo de ficha listo para copiar, abre images/INSTRUCCIONES.txt. En resumen:
-1. Guarda la imagen dentro de images.
-2. En app.js agrega una ficha dentro de "const initialProducts = [".
-3. Completa id unico, name, category, price, stock, tag, image y alt.
-4. Usa una categoria existente: "Rostro", "Labios", "Ojos", "Accesorios" o "Uñas".
-5. Price y stock son valores iniciales para usar si la hoja no tiene una fila para ese producto. Para administrarlos desde Sheets, agrega tambien una fila con su id, precio y stock.
+Para agregar un producto y comprobar que funcione antes de publicarlo, sigue la guia completa en images/INSTRUCCIONES.txt. Resumen:
+1. Guarda la foto en images con un nombre unico, corto y sin espacios ni tildes.
+2. Agrega a initialProducts en app.js una ficha con ID unico (solo letras inglesas minusculas, numeros, guion o guion bajo), nombre, categoria, precio/stock iniciales y la ruta exacta de la imagen.
+3. Si usas Google Sheets, agrega una fila con el mismo ID, precio y stock en la hoja publicada. Editar catalogo-productos.csv localmente no cambia la hoja publicada.
+4. Prueba index.html localmente: verifica nombre, categoria, precio, stock y que la foto cargue.
+5. Para publicar, sube app.js y la foto nueva a GitHub. Cambia el numero de version de app.js en index.html y sube tambien index.html, asi los celulares descargan el script nuevo.
+6. Espera a que termine GitHub Pages y recarga la pagina publicada. En images/INSTRUCCIONES.txt hay una lista de comprobacion y pasos para resolver avisos del catalogo.
 
 MARCAR UN PRODUCTO COMO AGOTADO
 
@@ -119,7 +120,7 @@ Puedes usar una hoja de calculo para cambiar precios y stock sin editar el codig
    window.CATALOG_CSV_URL = "PEGA_AQUI_EL_ENLACE_CSV_PUBLICADO";
 5. Publica una vez los archivos del sitio en GitHub Pages, incluida catalog-config.js. A partir de ahi, edita la hoja para cambiar precio o stock. Para agregar un producto nuevo, primero agrega sus datos y foto en app.js y la carpeta images, y despues agrega en Sheets una fila con solo id, price y stock. La tienda vuelve a leer los cambios al abrirse, al regresar a la pestaña o cada cinco minutos; la publicacion de Google puede tardar un momento en reflejarlos. La hoja publicada es de solo lectura y visible para cualquiera que tenga el enlace, incluidas las cantidades exactas.
 
-La tienda solo lee id, price y stock; ignora las demas columnas aunque la hoja antigua las conserve. Si una fila tiene un dato no valido, la tienda muestra un aviso y usa los datos iniciales definidos en app.js. Corrige esa fila en Google Sheets y vuelve a cargar la tienda. Si la hoja no carga, confirma que la publicaste en formato CSV y que pegaste el enlace de publicacion, no el enlace normal para editar o compartir. Si CATALOG_CSV_URL queda vacio, la pagina usa el catalogo y los valores iniciales incluidos en app.js.
+La tienda solo lee id, price y stock; ignora las demas columnas aunque la hoja antigua las conserve. Si una fila tiene un dato no valido, la tienda muestra un aviso. Si Google Sheets deja de responder, la pagina conserva el ultimo catalogo valido guardado en ese navegador; si nunca pudo leer la hoja en ese navegador, muestra los datos iniciales definidos en app.js. Corrige la fila o la conexion indicada y vuelve a cargar la tienda. Si la hoja no carga, confirma que la publicaste en formato CSV y que pegaste el enlace de publicacion, no el enlace normal para editar o compartir. Si CATALOG_CSV_URL queda vacio, la pagina usa el catalogo y los valores iniciales incluidos en app.js.
 
 PUBLICAR CAMBIOS DEL SITIO EN GITHUB
 

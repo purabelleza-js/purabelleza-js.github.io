@@ -185,6 +185,7 @@ const initialProducts = [
   }
 ];
 
+const CATALOG_CACHE_KEY = "pura-belleza-catalog-v1";
 let products = [...initialProducts];
 const cart = new Map();
 const productGrid = document.querySelector("#product-grid");
@@ -196,6 +197,7 @@ let activeCategory = "Todos";
 let searchTerm = "";
 let catalogLoadInProgress = false;
 let catalogWarning = "";
+let hasLoadedCatalog = false;
 
 function showImagePlaceholder(event) {
   if (event.target instanceof HTMLImageElement) {
@@ -306,6 +308,29 @@ function parseCsv(text) {
   }));
 }
 
+function applyCatalogCsv(csv) {
+  const updates = parseCsv(csv);
+  const knownIds = new Set(initialProducts.map((product) => normalizeProductId(product.id)));
+  const unknownIds = [...updates.keys()].filter((id) => !knownIds.has(id));
+  products = initialProducts.map((product) => {
+    const update = updates.get(normalizeProductId(product.id));
+    return update ? { ...product, ...update } : product;
+  });
+  catalogWarning = unknownIds.length
+    ? `Se ignoraron IDs que no existen en los productos del sitio: ${unknownIds.join(", ")}.`
+    : "";
+  hasLoadedCatalog = true;
+}
+
+function restoreCachedCatalog() {
+  try {
+    const csv = localStorage.getItem(CATALOG_CACHE_KEY);
+    if (csv) applyCatalogCsv(csv);
+  } catch (error) {
+    console.warn("No se pudo recuperar el último catálogo guardado:", error);
+  }
+}
+
 async function loadProducts() {
   const csvUrl = window.CATALOG_CSV_URL?.trim();
   if (!csvUrl) {
@@ -323,21 +348,20 @@ async function loadProducts() {
     if (csv.trimStart().startsWith("<")) {
       throw new Error("El enlace no parece ser el CSV publicado. Copia el enlace de publicación en formato CSV.");
     }
-    const updates = parseCsv(csv);
-    const knownIds = new Set(initialProducts.map((product) => normalizeProductId(product.id)));
-    const unknownIds = [...updates.keys()].filter((id) => !knownIds.has(id));
-    products = initialProducts.map((product) => {
-      const update = updates.get(normalizeProductId(product.id));
-      return update ? { ...product, ...update } : product;
-    });
-    catalogWarning = unknownIds.length
-      ? `Se ignoraron IDs que no existen en los productos del sitio: ${unknownIds.join(", ")}.`
-      : "";
+    applyCatalogCsv(csv);
+    try {
+      localStorage.setItem(CATALOG_CACHE_KEY, csv);
+    } catch (error) {
+      console.warn("No se pudo guardar una copia local del catálogo:", error);
+    }
     renderProducts();
     renderCart();
   } catch (error) {
     console.error("No se pudo actualizar el catálogo desde Google Sheets:", error);
-    catalogWarning = `No se pudo actualizar el catálogo desde Google Sheets (${error.message}). Se muestran los productos guardados en esta página.`;
+    const fallback = hasLoadedCatalog
+      ? "Se conserva el último catálogo válido."
+      : "Se muestran los datos iniciales de esta página.";
+    catalogWarning = `No se pudo actualizar el catálogo desde Google Sheets (${error.message}). ${fallback}`;
     renderProducts();
   } finally {
     catalogLoadInProgress = false;
@@ -588,6 +612,7 @@ document.querySelector("#checkout-form").addEventListener("submit", (event) => {
   checkoutDialog.close();
 });
 
+restoreCachedCatalog();
 renderProducts();
 renderCart();
 loadProducts();
