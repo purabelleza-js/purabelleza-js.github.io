@@ -1,1 +1,1 @@
-window.CATALOG_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR_RJYT4eWfOeW9O46lOVlTZsg5Ec6ItXQGAz-UVB7GH3jfWwRCHbC-9BSe5FkZmH1I1ZP9nv0_GHyH/pub?output=csv";
+window.CATALOG_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSqTZZCt0oW_8fx1-fvmotOPy43a0lgTOK3H1TmId-EBhRcdpSYsg-1oW978dCTcSlSYZ_iyhas7Yqr/pub?output=csv";

@@ -112,10 +112,10 @@ ADMINISTRAR EL CATALOGO CON GOOGLE SHEETS
 
 Puedes usar una hoja de calculo para cambiar precios y stock sin editar el codigo por cada cambio. Los productos, nombres, categorias y fotos se definen en el sitio. La conexion se configura una vez. La hoja publicada permite que cualquier persona vea los datos del catalogo, asi que no incluyas informacion privada.
 
-1. Abre catalogo-productos.csv en Excel o Google Sheets e importalo como una hoja. Tambien puedes crear una hoja con tres columnas. Los unicos encabezados necesarios son: id, price y stock.
+1. Abre catalogo-productos.csv en Excel o Google Sheets e importalo como una hoja. Tambien puedes crear una hoja con tres columnas. Los unicos encabezados necesarios son: id, price y stock. El CSV es una plantilla inicial: editarlo en la computadora no cambia por si solo los datos de la hoja ya publicada.
 2. En Sheets solo se administran el precio y el stock: no agregues nombres, categorias ni fotos. Cada fila debe tener el id exacto del producto (se encuentra en app.js), un precio en pesos sin separadores (puede quedar vacio si aun no se confirma) y un stock entero igual o mayor que cero. Usa stock 0 para agotado. Puedes dejar las columnas antiguas de name, category, tag, image, alt o available si ya existen; la tienda las ignora. No cambies los IDs.
 3. En Google Sheets abre Archivo > Compartir > Publicar en la web. Elige la hoja que contiene el catalogo y el formato CSV, luego pulsa Publicar y confirma. Copia el enlace CSV publicado.
-4. Abre catalog-config.js y asigna el enlace CSV publicado a CATALOG_CSV_URL, conservando las comillas:
+4. Abre catalog-config.js y asigna el enlace CSV publicado a CATALOG_CSV_URL, conservando las comillas. Si publicas una hoja nueva, reemplaza el enlace anterior:
    window.CATALOG_CSV_URL = "PEGA_AQUI_EL_ENLACE_CSV_PUBLICADO";
 5. Publica una vez los archivos del sitio en GitHub Pages, incluida catalog-config.js. A partir de ahi, edita la hoja para cambiar precio o stock. Para agregar un producto nuevo, primero agrega sus datos y foto en app.js y la carpeta images, y despues agrega en Sheets una fila con solo id, price y stock. La tienda vuelve a leer los cambios al abrirse, al regresar a la pestaña o cada cinco minutos; la publicacion de Google puede tardar un momento en reflejarlos. La hoja publicada es de solo lectura y visible para cualquiera que tenga el enlace, incluidas las cantidades exactas.
 

@@ -77,7 +77,7 @@ const initialProducts = [
     name: "Pestañas 8D",
     category: "Ojos",
     price: 2000,
-    stock: 1,
+    stock: 0,
     tag: "",
     image: "images/pestañas_8D.jpg",
     alt: "Pestañas postizas 8D reutilizables",
