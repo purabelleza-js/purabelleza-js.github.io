@@ -162,6 +162,26 @@ const initialProducts = [
     tag:"",
     image:"images/delineadores_de_labios.jpg",
     alt:"Delineadores de labios",
+  },
+  {
+    id:"libro_de_pestañas_10Vol_a_14Vol",
+    name:"Libro de pestañas 10Vol a 14Vol",
+    category:"Ojos",
+    price:10000,
+    stock:1,
+    tag:"",
+    image:"images/libro_de_pestañas_10Vol_a_14Vol.jpg",
+    alt:"Libro de pestañas 10Vol a 14Vol",
+  },
+  {
+    id:"libro_pestañas_10Vol_a_14Vol_x2",
+    name:"Libro de pestañas 10Vol a 14Vol x2",
+    category:"Ojos",
+    price:16000,
+    stock:1,
+    tag:"",
+    image:"images/libro_pestaña_10Vol_a_14Vol_x2.jpg",
+    alt:"Libro de pestañas 10Vol a 14Vol x2",
   }
 ];
 
@@ -271,7 +291,7 @@ function parseCsv(text) {
     const price = values.price === "" ? null : Number(normalizedPrice);
     const stock = Number(values.stock);
 
-    if (!/^[\w-]+$/.test(id)) throw new Error(`El ID de la fila ${rowNumber} está vacío o no es válido.`);
+    if (!/^[\p{L}\p{N}_-]+$/u.test(id)) throw new Error(`El ID de la fila ${rowNumber} está vacío o no es válido.`);
     if (ids.has(id)) throw new Error(`El ID "${id}" está repetido en la fila ${rowNumber}.`);
     if (values.price !== "" && (!Number.isFinite(price) || price < 0)) {
       throw new Error(`El precio de la fila ${rowNumber} debe ser un número igual o mayor que cero, o quedar vacío.`);
