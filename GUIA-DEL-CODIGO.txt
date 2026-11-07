@@ -117,9 +117,24 @@ Puedes usar una hoja de calculo para cambiar precios y stock sin editar el codig
 3. En Google Sheets abre Archivo > Compartir > Publicar en la web. Elige la hoja que contiene el catalogo y el formato CSV, luego pulsa Publicar y confirma. Copia el enlace CSV publicado.
 4. Abre catalog-config.js y asigna el enlace CSV publicado a CATALOG_CSV_URL, conservando las comillas:
    window.CATALOG_CSV_URL = "PEGA_AQUI_EL_ENLACE_CSV_PUBLICADO";
-5. Publica una vez todos los archivos del sitio en tu hosting (por ejemplo, GitHub Pages o Netlify), incluida catalog-config.js. A partir de ahi, edita la hoja para cambiar precio o stock. Para agregar un producto nuevo, primero agrega sus datos y foto en app.js y la carpeta images, y despues agrega en Sheets una fila con solo id, price y stock. La tienda vuelve a leer los cambios al abrirse, al regresar a la pestaña o cada cinco minutos; la publicacion de Google puede tardar un momento en reflejarlos. La hoja publicada es de solo lectura y visible para cualquiera que tenga el enlace, incluidas las cantidades exactas.
+5. Publica una vez los archivos del sitio en GitHub Pages, incluida catalog-config.js. A partir de ahi, edita la hoja para cambiar precio o stock. Para agregar un producto nuevo, primero agrega sus datos y foto en app.js y la carpeta images, y despues agrega en Sheets una fila con solo id, price y stock. La tienda vuelve a leer los cambios al abrirse, al regresar a la pestaña o cada cinco minutos; la publicacion de Google puede tardar un momento en reflejarlos. La hoja publicada es de solo lectura y visible para cualquiera que tenga el enlace, incluidas las cantidades exactas.
 
 La tienda solo lee id, price y stock; ignora las demas columnas aunque la hoja antigua las conserve. Si una fila tiene un dato no valido, la tienda muestra un aviso y usa los datos iniciales definidos en app.js. Corrige esa fila en Google Sheets y vuelve a cargar la tienda. Si la hoja no carga, confirma que la publicaste en formato CSV y que pegaste el enlace de publicacion, no el enlace normal para editar o compartir. Si CATALOG_CSV_URL queda vacio, la pagina usa el catalogo y los valores iniciales incluidos en app.js.
+
+PUBLICAR CAMBIOS DEL SITIO EN GITHUB
+
+Enlace directo para entrar al repositorio de GitHub:
+https://github.com/purabelleza-js/purabelleza-js.github.io
+
+Los cambios hechos en los archivos de tu computadora no aparecen en la pagina publicada hasta que los subas al repositorio.
+1. Guarda los archivos que modificaste. Si agregaste una foto, guarda tambien el archivo nuevo dentro de images.
+2. Abre el repositorio en GitHub e inicia sesion.
+3. Pulsa "Add file" y elige "Upload files".
+4. Arrastra desde tu computadora solo los archivos modificados. Si agregaste una foto, incluye tambien esa foto; conserva su carpeta (por ejemplo, images/nueva-foto.jpg).
+5. Espera a que termine la carga. GitHub mostrara los archivos que va a agregar o reemplazar. Comprueba que sean los correctos y pulsa "Commit changes" para guardar los cambios en el repositorio.
+6. GitHub Pages publica el sitio automaticamente. Espera unos minutos y abre https://purabelleza-js.github.io/; recarga con Ctrl+F5 para ver la version nueva.
+
+No pegues el contenido del sitio en Google Sheets ni vuelvas a subir todo si solo cambiaste un archivo. Sheets se usa unicamente para administrar precios y stock. Los archivos del sitio, como app.js, index.html, styles.css y las fotos, se actualizan en GitHub.
 
 AGREGAR UNA SECCION NUEVA
 
@@ -146,4 +161,4 @@ COMPROBAR LOS CAMBIOS
 4. Prueba los botones y enlaces que hayas cambiado. En particular, prueba filtros, agregar al carrito y el formulario si editaste esas partes.
 5. Si algo se rompe, deshaz con Ctrl+Z en el archivo que acabas de cambiar. Comprueba que sigan presentes las comillas, comas, llaves { }, etiquetas de cierre y puntos y coma.
 
-Si un cambio no se refleja, comprueba que editaste el archivo correcto, que guardaste y que el nombre de la clase, id o foto coincide exactamente. Con Google Sheets configurado, los cambios del catalogo se leen desde la hoja al recargar la tienda; los cambios al codigo (textos, estilos o funciones) requieren volver a publicar los archivos en Netlify.
+Si un cambio no se refleja, comprueba que editaste el archivo correcto, que guardaste y que el nombre de la clase, id o foto coincide exactamente. Con Google Sheets configurado, los cambios de precio y stock se leen desde la hoja al recargar la tienda; los cambios al codigo (textos, estilos, funciones, productos o fotos) requieren subir los archivos modificados a GitHub.
