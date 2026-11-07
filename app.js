@@ -155,13 +155,13 @@ const initialProducts = [
   },
   {
     id:"delineadores_de_labios",
-    name:"Delineadores de labios",
+    name:"Delineadores de labios (Por unidad)",
     category:"Labios",
     price:2000,
     stock:5,
     tag:"",
     image:"images/delineadores_de_labios.jpg",
-    alt:"Delineadores de labios (La unidad)",
+    alt:"Delineadores de labios",
   }
 ];
 
