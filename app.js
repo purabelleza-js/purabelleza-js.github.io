@@ -161,7 +161,7 @@ const initialProducts = [
     stock:5,
     tag:"",
     image:"images/delineadores_de_labios.jpg",
-    alt:"Delineadores de labios",
+    alt:"Delineadores de labios (La unidad)",
   }
 ];
 
