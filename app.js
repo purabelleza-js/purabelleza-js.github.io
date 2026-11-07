@@ -164,23 +164,23 @@ const initialProducts = [
     alt:"Delineadores de labios",
   },
   {
-    id:"libro_de_pestañas_10Vol_a_14Vol",
+    id:"libro_de_pestanas_10Vol_a_14Vol",
     name:"Libro de pestañas 10Vol a 14Vol",
     category:"Ojos",
     price:10000,
     stock:1,
     tag:"",
-    image:"images/libro_de_pestañas_10Vol_a_14Vol.jpg",
+    image:"images/libro_de_pestanas_10Vol_a_14Vol.jpg",
     alt:"Libro de pestañas 10Vol a 14Vol",
   },
   {
-    id:"libro_pestañas_10Vol_a_14Vol_x2",
+    id:"libro_pestanas_10Vol_a_14Vol_x2",
     name:"Libro de pestañas 10Vol a 14Vol x2",
     category:"Ojos",
     price:16000,
     stock:1,
     tag:"",
-    image:"images/libro_pestaña_10Vol_a_14Vol_x2.jpg",
+    image:"images/libro_pestanas_10Vol_a_14Vol_x2.jpg",
     alt:"Libro de pestañas 10Vol a 14Vol x2",
   }
 ];
@@ -220,6 +220,8 @@ const formatPrice = (price) =>
 
 const displayPrice = (price) => (price == null ? "Precio a confirmar" : formatPrice(price));
 const findProduct = (id) => products.find((item) => item.id === id);
+const normalizeProductId = (id) =>
+  id.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
 const isProductAvailable = (product) =>
   product?.stock == null ? product?.available !== false : product.stock > 0;
 const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({
@@ -278,7 +280,7 @@ function parseCsv(text) {
   const ids = new Set();
   return new Map(rows.slice(1).map((cells, rowIndex) => {
     const values = Object.fromEntries(headers.map((header, index) => [header, (cells[index] ?? "").trim()]));
-    const id = values.id;
+    const id = normalizeProductId(values.id);
     const rowNumber = rowIndex + 2;
     const rawPrice = values.price.replace(/[^\d.,+-]/g, "");
     const normalizedPrice = rawPrice.includes(",") && rawPrice.includes(".")
@@ -291,7 +293,7 @@ function parseCsv(text) {
     const price = values.price === "" ? null : Number(normalizedPrice);
     const stock = Number(values.stock);
 
-    if (!/^[\p{L}\p{N}_-]+$/u.test(id)) throw new Error(`El ID de la fila ${rowNumber} está vacío o no es válido.`);
+    if (!/^[a-z0-9_-]+$/.test(id)) throw new Error(`El ID de la fila ${rowNumber} está vacío o no es válido.`);
     if (ids.has(id)) throw new Error(`El ID "${id}" está repetido en la fila ${rowNumber}.`);
     if (values.price !== "" && (!Number.isFinite(price) || price < 0)) {
       throw new Error(`El precio de la fila ${rowNumber} debe ser un número igual o mayor que cero, o quedar vacío.`);
@@ -322,10 +324,10 @@ async function loadProducts() {
       throw new Error("El enlace no parece ser el CSV publicado. Copia el enlace de publicación en formato CSV.");
     }
     const updates = parseCsv(csv);
-    const knownIds = new Set(initialProducts.map((product) => product.id));
+    const knownIds = new Set(initialProducts.map((product) => normalizeProductId(product.id)));
     const unknownIds = [...updates.keys()].filter((id) => !knownIds.has(id));
     products = initialProducts.map((product) => {
-      const update = updates.get(product.id);
+      const update = updates.get(normalizeProductId(product.id));
       return update ? { ...product, ...update } : product;
     });
     catalogWarning = unknownIds.length
