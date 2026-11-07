@@ -375,7 +375,7 @@ function renderProducts() {
             <div class="image-placeholder" aria-hidden="true"><span>Foto local pendiente</span></div>
             ${product.image ? `
               <button class="product-image-view" type="button" data-view-product="${escapeHtml(product.id)}" aria-label="Ver imagen de ${escapeHtml(product.name)} ampliada">
-                <img class="product-image" src="${escapeHtml(product.image)}" alt="" loading="lazy" />
+                <img class="product-image" src="${escapeHtml(product.image)}" alt="" loading="${product.id === "libro_pestanas_10Vol_a_14Vol_x2" ? "eager" : "lazy"}" />
               </button>` : ""}
               ${!available ? '<span class="product-tag">Agotado</span>' : product.tag ? `<span class="product-tag">${escapeHtml(product.tag)}</span>` : ""}
               <button class="add-button" type="button" data-add="${escapeHtml(product.id)}" aria-label="${available ? `Agregar ${escapeHtml(product.name)} al pedido` : `${escapeHtml(product.name)}, agotado`}" ${available ? "" : "disabled"}>
