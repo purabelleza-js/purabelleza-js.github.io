@@ -655,16 +655,16 @@ function closeCart() {
 function getPaymentDetails(paymentMethod) {
   if (paymentMethod === "transferencia") {
     return [
-      "Forma de pago: Transferencia bancaria",
-      `Titular: ${PAYMENT_ACCOUNT.beneficiary}`,
-      `Banco / billetera: ${PAYMENT_ACCOUNT.bank}`,
-      `Alias: ${PAYMENT_ACCOUNT.alias}`,
-      `Concepto sugerido: ${PAYMENT_ACCOUNT.concept}`,
-      "Por favor, envía el comprobante por este medio para confirmar la compra.",
+      "💳 Forma de pago: Transferencia bancaria",
+      `👤 Titular: ${PAYMENT_ACCOUNT.beneficiary}`,
+      `🏦 Banco / billetera: ${PAYMENT_ACCOUNT.bank}`,
+      `💜 Alias: ${PAYMENT_ACCOUNT.alias}`,
+      `🧾 Concepto sugerido: ${PAYMENT_ACCOUNT.concept}`,
+      "📩 Por favor, envía el comprobante por este medio para confirmar la compra.",
     ].join("\n");
   }
 
-  return "Forma de pago: A coordinar por WhatsApp.";
+  return "💬 Forma de pago: A coordinar por WhatsApp.";
 }
 
 function buildOrderMessage(name, note, paymentMethod = "transferencia") {
@@ -674,10 +674,10 @@ function buildOrderMessage(name, note, paymentMethod = "transferencia") {
     const unitPrice = product.price == null ? "A confirmar" : formatPrice(product.price);
     const subtotal = product.price == null ? "A confirmar" : formatPrice(product.price * quantity);
     return [
-      product.name,
-      `Categoría: ${product.category}`,
-      `Cantidad: ${quantity} × ${unitPrice}`,
-      `Subtotal: ${subtotal}`,
+      `💄 ${product.name}`,
+      `✨ Categoría: ${product.category}`,
+      `🛍️ Cantidad: ${quantity} × ${unitPrice}`,
+      `💜 Subtotal: ${subtotal}`,
     ].join("\n  ");
   });
   const total = cartEntries.reduce((sum, [id, quantity]) => {
@@ -685,21 +685,21 @@ function buildOrderMessage(name, note, paymentMethod = "transferencia") {
   }, 0);
   const hasUnpricedItems = cartEntries.some(([id]) => findProduct(id)?.price == null);
   return [
-    "PURA BELLEZA JS",
+    "🦋💜 PURA BELLEZA JS 💜🦋",
     "",
-    "Hola, quiero hacer el siguiente pedido:",
+    "¡Hola! 😊 Quiero hacer el siguiente pedido:",
     "",
-    `Nombre: ${name}`,
+    `💁 Nombre: ${name}`,
     getPaymentDetails(paymentMethod),
     "",
-    "Productos:",
+    "🛍️ Productos:",
     lines.join("\n\n"),
     "",
-    `Total del pedido: ${hasUnpricedItems ? "A confirmar" : formatPrice(total)}`,
-    note ? `Nota: ${note}` : "",
+    `💜 Total del pedido: ${hasUnpricedItems ? "A confirmar" : formatPrice(total)}`,
+    note ? `📝 Nota: ${note}` : "",
     "",
-    "¿Podrían indicarme las opciones de envío?",
-    "Muchas gracias.",
+    "🚚 ¿Podrían indicarme las opciones de envío?",
+    "¡Muchas gracias! 😊🦋",
   ]
     .filter(Boolean)
     .join("\n");
