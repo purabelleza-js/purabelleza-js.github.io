@@ -488,8 +488,10 @@ function restoreCachedCatalog() {
   try {
     const csv = localStorage.getItem(CATALOG_CACHE_KEY);
     if (csv) applyCatalogCsv(csv);
+    return Boolean(csv);
   } catch (error) {
     console.warn("No se pudo recuperar el último catálogo guardado:", error);
+    return false;
   }
 }
 
@@ -520,6 +522,7 @@ async function loadProducts() {
     renderCart();
   } catch (error) {
     console.error("No se pudo cargar el archivo CSV del catálogo:", error);
+    if (!hasLoadedCatalog) restoreCachedCatalog();
     const fallback = hasLoadedCatalog
       ? "Se conserva el último catálogo válido."
       : "Se muestran los datos iniciales de esta página.";
@@ -854,16 +857,16 @@ document.querySelector("#copy-payment-data").addEventListener("click", copyPayme
 paymentMethodSelect.addEventListener("change", updatePaymentModeView);
 updatePaymentModeView();
 
-restoreCachedCatalog();
 restoreFavorites();
 renderFavoritesCount();
-renderProducts();
 renderCart();
-loadProducts();
-
 if (window.CATALOG_CSV_URL?.trim()) {
+  productGrid.innerHTML = '<p class="no-results" role="status">Cargando catálogo actualizado…</p>';
+  loadProducts();
   window.addEventListener("focus", loadProducts);
   window.setInterval(() => {
     if (!document.hidden) loadProducts();
   }, 5 * 60 * 1000);
+} else {
+  renderProducts();
 }
