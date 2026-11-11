@@ -376,7 +376,7 @@ const formatPrice = (price) =>
 const displayPrice = (price) => (price == null ? "Precio a confirmar" : formatPrice(price));
 const findProduct = (id) => products.find((item) => item.id === id);
 const normalizeProductId = (id) =>
-  id.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+  id.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().replace(/_/g, "-");
 const isProductAvailable = (product) =>
   product?.stock == null ? product?.available !== false : product.stock > 0;
 const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({
@@ -465,7 +465,7 @@ function applyCatalogCsv(csv) {
   const parsedUpdates = parseCsv(csv);
   const updates = new Map();
   for (const [id, update] of parsedUpdates) {
-    const sheetId = normalizeProductId(id).replace(/_/g, "-");
+    const sheetId = normalizeProductId(id);
     const canonicalId = CATALOG_ID_ALIASES.get(sheetId) ?? sheetId;
     if (updates.has(canonicalId)) {
       throw new Error(`El ID "${canonicalId}" aparece más de una vez en la hoja.`);
