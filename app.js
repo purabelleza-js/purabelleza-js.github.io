@@ -1,11 +1,18 @@
 const BUSINESS_WHATSAPP_NUMBERS = new Set(["5493878759878", "5493878415462"]);
-const PAYMENT_ACCOUNT = {
-  beneficiary: "Joaquín Sánchez Montel",
-  bank: "Naranja X",
-  alias: "purabellezajs.2026",
-  concept: "Pura Belleza JS - Pedido",
-};
 const CURRENCY = "ARS";
+const ORDER_EMOJI = {
+  butterfly: "\u{1F98B}",
+  cash: "\u{1F4B5}",
+  card: "\u{1F4B3}",
+  heart: "\u{1F49C}",
+  memo: "\u{1F4DD}",
+  person: "\u{1F464}",
+  shoppingBag: "\u{1F6CD}\uFE0F",
+  smile: "\u{1F60A}",
+  sparkle: "\u{2728}\uFE0F",
+  truck: "\u{1F69A}",
+  lipstick: "\u{1F484}",
+};
 
 const initialProducts = [
   {
@@ -655,16 +662,12 @@ function closeCart() {
 function getPaymentDetails(paymentMethod) {
   if (paymentMethod === "transferencia") {
     return [
-      "💳 Forma de pago: Transferencia bancaria",
-      `👤 Titular: ${PAYMENT_ACCOUNT.beneficiary}`,
-      `🏦 Banco / billetera: ${PAYMENT_ACCOUNT.bank}`,
-      `💜 Alias: ${PAYMENT_ACCOUNT.alias}`,
-      `🧾 Concepto sugerido: ${PAYMENT_ACCOUNT.concept}`,
-      "📩 Por favor, envía el comprobante por este medio para confirmar la compra.",
+      `${ORDER_EMOJI.card} Forma de pago: Transferencia bancaria`,
+      `${ORDER_EMOJI.memo} Concepto: Pedido`,
     ].join("\n");
   }
 
-  return "💬 Forma de pago: A coordinar por WhatsApp.";
+  return `${ORDER_EMOJI.cash} Forma de pago: Efectivo`;
 }
 
 function buildOrderMessage(name, note, paymentMethod = "transferencia") {
@@ -674,10 +677,10 @@ function buildOrderMessage(name, note, paymentMethod = "transferencia") {
     const unitPrice = product.price == null ? "A confirmar" : formatPrice(product.price);
     const subtotal = product.price == null ? "A confirmar" : formatPrice(product.price * quantity);
     return [
-      `💄 ${product.name}`,
-      `✨ Categoría: ${product.category}`,
-      `🛍️ Cantidad: ${quantity} × ${unitPrice}`,
-      `💜 Subtotal: ${subtotal}`,
+      `${ORDER_EMOJI.lipstick} ${product.name}`,
+      `${ORDER_EMOJI.sparkle} Categoría: ${product.category}`,
+      `${ORDER_EMOJI.shoppingBag} Cantidad: ${quantity} × ${unitPrice}`,
+      `${ORDER_EMOJI.heart} Subtotal: ${subtotal}`,
     ].join("\n  ");
   });
   const total = cartEntries.reduce((sum, [id, quantity]) => {
@@ -685,21 +688,21 @@ function buildOrderMessage(name, note, paymentMethod = "transferencia") {
   }, 0);
   const hasUnpricedItems = cartEntries.some(([id]) => findProduct(id)?.price == null);
   return [
-    "🦋💜 PURA BELLEZA JS 💜🦋",
+    `${ORDER_EMOJI.butterfly}${ORDER_EMOJI.heart} PURA BELLEZA JS ${ORDER_EMOJI.heart}${ORDER_EMOJI.butterfly}`,
     "",
-    "¡Hola! 😊 Quiero hacer el siguiente pedido:",
+    `¡Hola! ${ORDER_EMOJI.smile} Quiero hacer el siguiente pedido:`,
     "",
-    `💁 Nombre: ${name}`,
+    `${ORDER_EMOJI.person} Nombre: ${name}`,
     getPaymentDetails(paymentMethod),
     "",
-    "🛍️ Productos:",
+    `${ORDER_EMOJI.shoppingBag} Productos:`,
     lines.join("\n\n"),
     "",
-    `💜 Total del pedido: ${hasUnpricedItems ? "A confirmar" : formatPrice(total)}`,
-    note ? `📝 Nota: ${note}` : "",
+    `${ORDER_EMOJI.heart} Total del pedido: ${hasUnpricedItems ? "A confirmar" : formatPrice(total)}`,
+    note ? `${ORDER_EMOJI.memo} Nota: ${note}` : "",
     "",
-    "🚚 ¿Podrían indicarme las opciones de envío?",
-    "¡Muchas gracias! 😊🦋",
+    `${ORDER_EMOJI.truck} ¿Podrían indicarme las opciones de envío?`,
+    `¡Muchas gracias! ${ORDER_EMOJI.smile}${ORDER_EMOJI.butterfly}`,
   ]
     .filter(Boolean)
     .join("\n");
@@ -797,35 +800,6 @@ productDialog.addEventListener("click", (event) => {
 });
 
 const paymentMethodSelect = document.querySelector("#checkout-payment-method");
-const paymentTransferInfo = document.querySelector("#payment-transfer-info");
-
-function updatePaymentModeView() {
-  const selectedMethod = paymentMethodSelect.value;
-  const isTransfer = selectedMethod === "transferencia";
-  paymentTransferInfo.hidden = !isTransfer;
-}
-
-async function copyPaymentData() {
-  const paymentText = [
-    `Titular: ${PAYMENT_ACCOUNT.beneficiary}`,
-    `Banco / billetera: ${PAYMENT_ACCOUNT.bank}`,
-    `Alias: ${PAYMENT_ACCOUNT.alias}`,
-    `Concepto sugerido: ${PAYMENT_ACCOUNT.concept}`,
-  ].join("\n");
-
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(paymentText);
-      const hint = document.querySelector("#form-hint");
-      hint.textContent = "Datos bancarios copiados. Podes pegarlos en tu app de pago.";
-      return;
-    }
-  } catch (error) {
-    console.warn("No se pudieron copiar los datos bancarios:", error);
-  }
-
-  window.prompt("Copia estos datos para la transferencia:", paymentText);
-}
 
 document.querySelector("#checkout-form").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -847,13 +821,8 @@ document.querySelector("#checkout-form").addEventListener("submit", (event) => {
   renderCart();
   event.currentTarget.reset();
   paymentMethodSelect.value = "transferencia";
-  updatePaymentModeView();
   checkoutDialog.close();
 });
-
-document.querySelector("#copy-payment-data").addEventListener("click", copyPaymentData);
-paymentMethodSelect.addEventListener("change", updatePaymentModeView);
-updatePaymentModeView();
 
 restoreFavorites();
 renderFavoritesCount();

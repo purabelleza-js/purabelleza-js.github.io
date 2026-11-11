@@ -12,7 +12,7 @@
     <link rel="icon" type="image/svg+xml" href="assets/logo-pura-bellesa-js.svg" />
     <link rel="stylesheet" href="styles.css?v=20261110-1" />
     <script src="catalog-config.js?v=20261111-2" defer></script>
-    <script src="app.js?v=20261111-9" defer></script>
+    <script src="app.js?v=20261111-11" defer></script>
   </head>
   <body>
     <div class="announcement">¡Si no encuentras lo que buscas, podemos conseguírtelo!</div>
@@ -194,18 +194,8 @@
         <label for="checkout-payment-method">Modalidad de pago</label>
         <select id="checkout-payment-method" name="paymentMethod" required>
           <option value="transferencia">Transferencia bancaria</option>
-          <option value="whatsapp">Pago por coordinación por WhatsApp</option>
+          <option value="efectivo">Efectivo</option>
         </select>
-        <div class="payment-data-panel" id="payment-transfer-info" hidden aria-live="polite">
-          <p class="payment-panel-title">Datos para transferencias</p>
-          <ul>
-            <li><strong>Titular:</strong> Joaquín Sánchez Montel</li>
-            <li><strong>Banco / billetera:</strong> Naranja X</li>
-            <li><strong>Alias:</strong> purabellezajs.2026</li>
-            <li><strong>Concepto sugerido:</strong> Pura Belleza JS - Pedido</li>
-          </ul>
-          <button class="button button-secondary copy-payment-button" id="copy-payment-data" type="button">Copiar datos</button>
-        </div>
         <label for="business-whatsapp">¿A qué WhatsApp enviamos tu pedido?</label>
         <select id="business-whatsapp" name="businessWhatsapp" required>
           <option value="5493878759878">Sara · +54 9 387 875-9878</option>
