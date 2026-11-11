@@ -706,10 +706,8 @@ function buildOrderMessage(name, note, paymentMethod = "transferencia") {
 }
 
 function buildWhatsAppUrl(phone, message) {
-  const url = new URL(`https://wa.me/${phone}`);
   const whatsappMessage = message.normalize("NFC").replace(/\r?\n/g, "\r\n");
-  url.searchParams.set("text", whatsappMessage);
-  return url.toString();
+  return `https://wa.me/${phone}?text=${encodeURIComponent(whatsappMessage)}`;
 }
 
 document.querySelector("#product-grid").addEventListener("click", (event) => {
