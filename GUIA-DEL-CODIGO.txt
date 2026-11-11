@@ -6,7 +6,9 @@ QUE ARCHIVO EDITAR
 
 - index.html: textos, fotos del logo/portada, enlaces y estructura de las secciones.
 - styles.css: colores, tamanos, espacios, distribucion, botones y adaptacion a celulares.
-- app.js: productos y sus fotos; filtros, carrito y pedido por WhatsApp. El precio y el stock se actualizan desde Google Sheets.
+- app.js: fichas y fotos de productos; filtros, carrito y pedido por WhatsApp.
+- catalogo-productos.csv: precios y stock de todos los productos. Este archivo local es la fuente del catalogo; no hace falta compartir enlaces de Google Sheets.
+- catalog-config.js: indica a la pagina que lea catalogo-productos.csv.
 - images: fotos de los productos. El nombre del archivo debe coincidir con la ruta indicada en app.js.
 - assets: imagenes de marca usadas en el encabezado y la portada.
 
@@ -18,6 +20,16 @@ CAMBIAR UN TEXTO
 Ejemplo:
   <h2>Un poquito de <em>magia</em></h2>
 Puedes cambiar las palabras y conservar <h2>, </h2>, <em> y </em>.
+
+CAMBIAR PRECIOS O STOCK
+
+1. Abre catalogo-productos.csv con un editor de texto o una hoja de calculo.
+2. Conserva la primera linea exactamente como esta: id,price,stock.
+3. Busca el ID del producto y cambia solo los numeros de price o stock. Usa una fila por producto y no cambies el ID.
+4. Guarda el archivo como CSV separado por comas. No lo guardes como XLSX.
+5. Recarga la pagina. Para ver los cambios en el sitio publicado, publica tambien catalogo-productos.csv.
+
+Para probar la pagina desde tu computadora, abre la carpeta con la extension Live Server de Visual Studio Code y usa "Open with Live Server". Abrir index.html directamente con doble clic puede impedir que el navegador lea el CSV.
 
 Textos y secciones que puedes buscar en index.html:
 - "announcement": mensaje de la franja superior.
@@ -94,18 +106,18 @@ AGREGAR UN PRODUCTO
 
 Para agregar un producto y comprobar que funcione antes de publicarlo, sigue la guia completa en images/INSTRUCCIONES.txt. Resumen:
 1. Guarda la foto en images con un nombre unico, corto y sin espacios ni tildes.
-2. Agrega a initialProducts en app.js una ficha con ID unico (solo letras inglesas minusculas, numeros, guion o guion bajo), nombre, categoria, precio/stock iniciales y la ruta exacta de la imagen.
-3. Si usas Google Sheets, agrega una fila con el mismo ID, precio y stock en la hoja publicada. Editar catalogo-productos.csv localmente no cambia la hoja publicada.
-4. Prueba index.html localmente: verifica nombre, categoria, precio, stock y que la foto cargue.
-5. Para publicar, sube app.js y la foto nueva a GitHub. Cambia el numero de version de app.js en index.html y sube tambien index.html, asi los celulares descargan el script nuevo.
+2. Agrega a initialProducts en app.js una ficha con ID unico en minusculas, usando solo letras inglesas, numeros y guiones (sin guion bajo), nombre, categoria, precio/stock iniciales y la ruta exacta de la imagen.
+3. Agrega una fila a catalogo-productos.csv con ese mismo ID, precio y stock, separados por comas.
+4. Prueba con Live Server: verifica nombre, categoria, precio, stock y que la foto cargue.
+5. Para publicar, sube app.js, catalogo-productos.csv y la foto nueva a GitHub. Si modificaste app.js, actualiza tambien su numero de version en index.html y publica index.html.
 6. Espera a que termine GitHub Pages y recarga la pagina publicada. En images/INSTRUCCIONES.txt hay una lista de comprobacion y pasos para resolver avisos del catalogo.
 
 MARCAR UN PRODUCTO COMO AGOTADO
 
-1. En Google Sheets, busca la fila del producto.
+1. En catalogo-productos.csv, busca la fila del producto.
 2. Cambia su stock a 0 para que aparezca como agotado. El stock debe ser un numero entero mayor o igual que cero.
-3. Si todavia no administras el producto desde Sheets, abre app.js y cambia stock a 0 dentro de su ficha en "const initialProducts = [".
-4. Guarda los cambios y recarga la pagina. El producto seguira visible como "Agotado · Próximamente" y no se podra agregar al pedido.
+3. Si el CSV no tiene ese producto, abre app.js y cambia stock a 0 dentro de su ficha en "const initialProducts = [".
+4. Guarda los cambios y recarga la pagina. Para que el cambio aparezca en la web publicada, publica catalogo-productos.csv. El producto seguira visible como "Agotado · Próximamente" y no se podra agregar al pedido.
 
 Si agregas una categoria nueva, agrega tambien un boton con el mismo valor en data-category en index.html. Si los nombres no coinciden exactamente, el filtro no funcionara.
 

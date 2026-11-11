@@ -120,7 +120,7 @@ const initialProducts = [
     alt: "Uñas efecto gato",
   },
   {
-    id: "Toallitas_Humedas",
+    id: "toallitas-humedas",
     name: "Toallitas húmedas",
     category: "Rostro",
     price: 1500,
@@ -130,7 +130,7 @@ const initialProducts = [
     alt: "Toallitas húmedas para el rostro",
   },
   {
-    id: "Gloss_Rosa_Con_Brillo",
+    id: "gloss-rosa-con-brillo",
     name: "Gloss rosa con brillo",
     category: "Labios",
     price: 2500,
@@ -140,7 +140,7 @@ const initialProducts = [
     alt: "Gloss rosado con brillo",
   },
   {
-    id: "Gloss_rojo",
+    id: "gloss-rojo",
     name: "Gloss Rojo",
     category: "Labios",
     price: 2500,
@@ -150,7 +150,7 @@ const initialProducts = [
     alt: "Gloss Rojo ",
   },
   {
-    id:"Arqueadores_de_pestanas",
+    id:"arqueadores-de-pestanas",
     name:"Arqueadores de pestañas",
     category:"Ojos",
     price:2000,
@@ -160,7 +160,7 @@ const initialProducts = [
     alt:"Arqueadores de pestañas",
   },
   {
-    id:"delineadores_de_labios",
+    id:"delineadores-de-labios",
     name:"Delineadores de labios (Por unidad)",
     category:"Labios",
     price:2000,
@@ -170,7 +170,7 @@ const initialProducts = [
     alt:"Delineadores de labios",
   },
   {
-    id:"libro_de_pestanas_10Vol_a_14Vol",
+    id:"libro-de-pestanas-10vol-a-14vol",
     name:"Libro de pestañas 10Vol a 14Vol",
     category:"Ojos",
     price:10000,
@@ -180,7 +180,7 @@ const initialProducts = [
     alt:"Libro de pestañas 10Vol a 14Vol",
   },
   {
-    id:"libro_pestanas_10Vol_a_14Vol_x2",
+    id:"libro-pestanas-10vol-a-14vol-x2",
     name:"Libro de pestañas 10Vol a 14Vol x2",
     category:"Ojos",
     price:16000,
@@ -190,7 +190,7 @@ const initialProducts = [
     alt:"Libro de pestañas 10Vol a 14Vol x2",
   },
   {
-    id: "cepillo_para_pestañas_A",
+    id: "cepillo-para-pestanas-a",
     name: "Cepillo para pestañas Azules (pack de 3)",
     category: "Ojos",
     price: 2000,
@@ -200,7 +200,7 @@ const initialProducts = [
     alt: "Cepillo para pestañas Azules"
   },
   {
-    id: "cepillo_para_pestañas_R",
+    id: "cepillo-para-pestanas-r",
     name: "Cepillo para pestañas Rosados (pack de 3)",
     category: "Ojos",
     price: 1000,
@@ -210,7 +210,7 @@ const initialProducts = [
     alt: "Cepillo para pestañas rosados"
   },
   {
-    id: "cepillo_para_pestañas_M",
+    id: "cepillo-para-pestanas-m",
     name: "Cepillo para pestañas Moradas (pack de 3)",
     category: "Ojos",
     price: 1000,
@@ -220,7 +220,7 @@ const initialProducts = [
     alt: "Cepillo para pestañas Moradas"
   },
   {
-    id: "cepillo_para_pestañas_Rosa_Fuerte",
+    id: "cepillo-para-pestanas-rosa-fuerte",
     name: "Cepillo para pestañas Rosa Fuerte (pack de 3)",
     category: "Ojos",
     price: 1000,
@@ -230,7 +230,7 @@ const initialProducts = [
     alt: "Cepillo para pestañas Rosa Fuerte"
   },
   {
-    id: "rubor_liquido",
+    id: "rubor-liquido",
     name: "Rubor líquido",
     category: "Rostro",
     price: 5000,
@@ -240,7 +240,7 @@ const initialProducts = [
     alt: "Rubor líquido"  
   },
   {
-    id: "pinza_para_depilar_cejas",
+    id: "pinza-para-depilar-cejas",
     name: "Pinza para depilar cejas",
     category: "Rostro",
     price: 2000,
@@ -250,7 +250,7 @@ const initialProducts = [
     alt: "Pinza para depilar cejas"
   },
   {
-    id:"perfiladora_de_pelo_facial_y_cepillo_para_cejas", 
+    id:"perfiladora-de-pelo-facial-y-cepillo-para-cejas", 
     name:"Perfiladora de pelo facial y cepillo para cejas",
     category:"Rostro",
     price:2500,
@@ -260,7 +260,7 @@ const initialProducts = [
     alt:"Perfiladora de pelo facial y cepillo para cejas"
   },
   {
-    id:"mascarilla_de_barro",
+    id:"mascarilla-de-barro",
     name:"Mascarilla facial de barro",
     category:"Rostro",
     price:1000,
@@ -270,7 +270,7 @@ const initialProducts = [
     alt:"Mascarilla facial de barro"
   },
   {
-    id:"crema_de_arroz_para_manos",
+    id:"crema-de-arroz-para-manos",
     name:"Crema de arroz para manos",
     category:"Rostro",
     price:3000,
@@ -280,7 +280,7 @@ const initialProducts = [
     alt:"Crema de arroz para manos"
   },
   {
-    id:"parches_para_ojos",
+    id:"parches-para-ojos",
     name:"Parches para ojos",
     category:"Rostro",
     price:2000,
@@ -295,8 +295,9 @@ const initialProducts = [
 const CATALOG_CACHE_KEY = "pura-belleza-catalog-v1";
 const FAVORITES_STORAGE_KEY = "pura-belleza-favorites-v1";
 const CATALOG_ID_ALIASES = new Map([
+  ["corrector", "corrector-para-ojeras"],
   ["corrector-baoshi", "corrector-para-ojeras"],
-  ["cascarilla_de_barro", "mascarilla_de_barro"],
+  ["cascarilla-de-barro", "mascarilla-de-barro"],
 ]);
 let products = [...initialProducts];
 const cart = new Map();
@@ -424,12 +425,12 @@ function parseCsv(text) {
     row.push(field);
     if (row.some((value) => value.trim())) rows.push(row);
   }
-  if (rows.length < 2) throw new Error("La hoja no tiene productos para mostrar.");
+  if (rows.length < 2) throw new Error("El archivo CSV no tiene productos para mostrar.");
 
   const headers = rows[0].map((header) => header.replace(/^\uFEFF/, "").trim().toLowerCase());
   const requiredHeaders = ["id", "price", "stock"];
   const missingHeaders = requiredHeaders.filter((header) => !headers.includes(header));
-  if (missingHeaders.length) throw new Error(`Faltan columnas en la hoja: ${missingHeaders.join(", ")}.`);
+  if (missingHeaders.length) throw new Error(`Faltan columnas en el archivo CSV: ${missingHeaders.join(", ")}.`);
 
   const ids = new Set();
   return new Map(rows.slice(1).map((cells, rowIndex) => {
@@ -464,7 +465,8 @@ function applyCatalogCsv(csv) {
   const parsedUpdates = parseCsv(csv);
   const updates = new Map();
   for (const [id, update] of parsedUpdates) {
-    const canonicalId = CATALOG_ID_ALIASES.get(id) ?? id;
+    const sheetId = normalizeProductId(id).replace(/_/g, "-");
+    const canonicalId = CATALOG_ID_ALIASES.get(sheetId) ?? sheetId;
     if (updates.has(canonicalId)) {
       throw new Error(`El ID "${canonicalId}" aparece más de una vez en la hoja.`);
     }
@@ -500,13 +502,13 @@ async function loadProducts() {
   if (catalogLoadInProgress) return;
   catalogLoadInProgress = true;
   try {
-    const url = new URL(csvUrl);
+    const url = new URL(csvUrl, window.location.href);
     url.searchParams.set("_catalog_refresh", Date.now());
     const response = await fetch(url, { cache: "no-store" });
-    if (!response.ok) throw new Error(`No se pudo leer la hoja (error ${response.status}).`);
+    if (!response.ok) throw new Error(`No se pudo leer el archivo CSV (error ${response.status}).`);
     const csv = await response.text();
     if (csv.trimStart().startsWith("<")) {
-      throw new Error("El enlace no parece ser el CSV publicado. Copia el enlace de publicación en formato CSV.");
+      throw new Error("El archivo del catálogo no parece estar en formato CSV.");
     }
     applyCatalogCsv(csv);
     try {
@@ -517,11 +519,11 @@ async function loadProducts() {
     renderProducts();
     renderCart();
   } catch (error) {
-    console.error("No se pudo actualizar el catálogo desde Google Sheets:", error);
+    console.error("No se pudo cargar el archivo CSV del catálogo:", error);
     const fallback = hasLoadedCatalog
       ? "Se conserva el último catálogo válido."
       : "Se muestran los datos iniciales de esta página.";
-    catalogWarning = `No se pudo actualizar el catálogo desde Google Sheets (${error.message}). ${fallback}`;
+    catalogWarning = `No se pudo cargar el catálogo (${error.message}). ${fallback}`;
     renderProducts();
   } finally {
     catalogLoadInProgress = false;

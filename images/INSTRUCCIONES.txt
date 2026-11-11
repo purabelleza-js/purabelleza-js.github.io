@@ -19,7 +19,7 @@ Sigue todos estos pasos en orden. Un producto necesita una ficha en app.js y su 
     alt: "Paleta de sombras violetas",
   },
 
-3. Crea un ID nuevo para cada producto. Usa solo letras inglesas minusculas (a-z), numeros, guiones o guion bajo; no uses espacios, tildes, ñ ni signos. Ejemplos validos: "sombra-violeta", "labial_02". El ID no es el nombre visible y debe ser unico.
+3. Crea un ID nuevo para cada producto. Usa solo letras inglesas minusculas (a-z), numeros y guiones; no uses espacios, guion bajo, tildes, ñ ni signos. Separa las palabras con guiones, por ejemplo: "sombra-violeta" o "labial-02". El ID no es el nombre visible y debe ser unico.
 4. Completa todos los campos:
    - name: nombre que vera el cliente.
    - category: usa exactamente "Rostro", "Labios", "Ojos", "Accesorios" o "Uñas".
