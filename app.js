@@ -1,16 +1,22 @@
 const BUSINESS_WHATSAPP_NUMBERS = new Set(["5493878759878", "5493878415462"]);
+const PAYMENT_ACCOUNT = {
+  beneficiary: "Joaquín Sánchez Montel",
+  bank: "Naranja X",
+  alias: "purabellezajs.2026",
+  concept: "Pura Belleza JS - Pedido",
+};
 const CURRENCY = "ARS";
 
 const initialProducts = [
   {
-    id: "corrector-baoshi",
-    name: "Corrector Baoshi",
+    id: "corrector-para-ojeras",
+    name: "Corrector para ojeras en barra",
     category: "Rostro",
     price: 2500,
-    stock: 1,
+    stock: 3,
     tag: "",
-    image: "images/Corrector.jpg",
-    alt: "Corrector Baoshi en barra",
+    image: "images/corrector_para_ojeras.jpg",
+    alt: "Corrector para ojeras en barra",
   },
   {
     id: "mascara-miss-betty",
@@ -182,22 +188,168 @@ const initialProducts = [
     tag:"",
     image:"images/libro_pestana_10Vol_a_14Vol_x2.jpg",
     alt:"Libro de pestañas 10Vol a 14Vol x2",
+  },
+  {
+    id: "cepillo_para_pestañas_A",
+    name: "Cepillo para pestañas Azules (pack de 3)",
+    category: "Ojos",
+    price: 2000,
+    stock: 6,
+    tag: "",
+    image: "images/cepillo_de_pestañas_azul.jpg",
+    alt: "Cepillo para pestañas Azules"
+  },
+  {
+    id: "cepillo_para_pestañas_R",
+    name: "Cepillo para pestañas Rosados (pack de 3)",
+    category: "Ojos",
+    price: 1000,
+    stock: 6,
+    tag: "",
+    image: "images/cepillo_de_pestañas_rosado.jpg",
+    alt: "Cepillo para pestañas rosados"
+  },
+  {
+    id: "cepillo_para_pestañas_M",
+    name: "Cepillo para pestañas Moradas (pack de 3)",
+    category: "Ojos",
+    price: 1000,
+    stock: 3,
+    tag: "",
+    image: "images/Cepillo_de_pestañas_morado.jpg",
+    alt: "Cepillo para pestañas Moradas"
+  },
+  {
+    id: "cepillo_para_pestañas_Rosa_Fuerte",
+    name: "Cepillo para pestañas Rosa Fuerte (pack de 3)",
+    category: "Ojos",
+    price: 1000,
+    stock: 6,
+    tag: "",
+    image: "images/cepillo_de_pestañas_rosado_fuerte.jpg",
+    alt: "Cepillo para pestañas Rosa Fuerte"
+  },
+  {
+    id: "rubor_liquido",
+    name: "Rubor líquido",
+    category: "Rostro",
+    price: 5000,
+    stock: 1,
+    tag: "",
+    image: "images/rubor_liquido.jpg",
+    alt: "Rubor líquido"  
+  },
+  {
+    id: "pinza_para_depilar_cejas",
+    name: "Pinza para depilar cejas",
+    category: "Rostro",
+    price: 2000,
+    stock: 1,
+    tag: "",
+    image: "images/pinza_para_depilar_cejas.jpg",
+    alt: "Pinza para depilar cejas"
+  },
+  {
+    id:"perfiladora_de_pelo_facial_y_cepillo_para_cejas", 
+    name:"Perfiladora de pelo facial y cepillo para cejas",
+    category:"Rostro",
+    price:2500,
+    stock:1,
+    tag:"",
+    image:"images/perfiladora_de_pelo_y_cepillo_de_pestañas.jpg",
+    alt:"Perfiladora de pelo facial y cepillo para cejas"
+  },
+  {
+    id:"mascarilla_de_barro",
+    name:"Mascarilla facial de barro",
+    category:"Rostro",
+    price:1000,
+    stock:0,
+    tag:"",
+    image:"images/mascarilla_facial_de_barro.jpg",
+    alt:"Mascarilla facial de barro"
+  },
+  {
+    id:"crema_de_arroz_para_manos",
+    name:"Crema de arroz para manos",
+    category:"Rostro",
+    price:3000,
+    stock:2,
+    tag:"",
+    image:"images/crema_para_manos_de_arroz.jpg",
+    alt:"Crema de arroz para manos"
+  },
+  {
+    id:"parches_para_ojos",
+    name:"Parches para ojos",
+    category:"Rostro",
+    price:2000,
+    stock:1,  
+    tag:"",
+    image:"images/parches_para_ojos.jpg",
+    alt:"Parches para ojos"
+  
   }
 ];
 
 const CATALOG_CACHE_KEY = "pura-belleza-catalog-v1";
+const FAVORITES_STORAGE_KEY = "pura-belleza-favorites-v1";
+const CATALOG_ID_ALIASES = new Map([
+  ["corrector-baoshi", "corrector-para-ojeras"],
+  ["cascarilla_de_barro", "mascarilla_de_barro"],
+]);
 let products = [...initialProducts];
 const cart = new Map();
+let favoriteProductIds = new Set();
 const productGrid = document.querySelector("#product-grid");
 const cartPanel = document.querySelector("#cart-panel");
 const overlay = document.querySelector("#overlay");
 const checkoutDialog = document.querySelector("#checkout-dialog");
 const productDialog = document.querySelector("#product-dialog");
+const brandSocials = document.querySelector(".brand-socials");
 let activeCategory = "Todos";
 let searchTerm = "";
 let catalogLoadInProgress = false;
 let catalogWarning = "";
 let hasLoadedCatalog = false;
+
+document.addEventListener("click", (event) => {
+  if (!brandSocials.contains(event.target)) brandSocials.open = false;
+});
+
+function restoreFavorites() {
+  try {
+    const savedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
+    if (!savedFavorites) return;
+    const favoriteIds = JSON.parse(savedFavorites);
+    if (!Array.isArray(favoriteIds) || favoriteIds.some((id) => typeof id !== "string")) {
+      throw new Error("El formato de favoritos guardados no es válido.");
+    }
+    favoriteProductIds = new Set(favoriteIds);
+  } catch (error) {
+    console.warn("No se pudieron recuperar los favoritos guardados:", error);
+    favoriteProductIds = new Set();
+  }
+}
+
+function toggleFavorite(productId) {
+  if (favoriteProductIds.has(productId)) favoriteProductIds.delete(productId);
+  else favoriteProductIds.add(productId);
+
+  try {
+    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify([...favoriteProductIds]));
+  } catch (error) {
+    console.warn("No se pudieron guardar los favoritos:", error);
+  }
+  renderFavoritesCount();
+  renderProducts();
+}
+
+function renderFavoritesCount() {
+  const count = favoriteProductIds.size;
+  document.querySelector("#favorites-count").textContent = count;
+  document.querySelector("#open-favorites").setAttribute("aria-label", `Ver favoritos (${count})`);
+}
 
 function showImagePlaceholder(event) {
   if (event.target instanceof HTMLImageElement) {
@@ -309,7 +461,15 @@ function parseCsv(text) {
 }
 
 function applyCatalogCsv(csv) {
-  const updates = parseCsv(csv);
+  const parsedUpdates = parseCsv(csv);
+  const updates = new Map();
+  for (const [id, update] of parsedUpdates) {
+    const canonicalId = CATALOG_ID_ALIASES.get(id) ?? id;
+    if (updates.has(canonicalId)) {
+      throw new Error(`El ID "${canonicalId}" aparece más de una vez en la hoja.`);
+    }
+    updates.set(canonicalId, update);
+  }
   const knownIds = new Set(initialProducts.map((product) => normalizeProductId(product.id)));
   const unknownIds = [...updates.keys()].filter((id) => !knownIds.has(id));
   products = initialProducts.map((product) => {
@@ -379,13 +539,19 @@ function renderProducts() {
   }
 
   const visibleProducts = products.filter((product) => {
-    const matchesCategory = activeCategory === "Todos" || product.category === activeCategory;
+    const matchesCategory = activeCategory === "Todos"
+      || (activeCategory === "Favoritos"
+        ? favoriteProductIds.has(product.id)
+        : product.category === activeCategory);
     const matchesSearch = `${product.name} ${product.category}`.toLowerCase().includes(searchTerm);
     return matchesCategory && matchesSearch;
   });
 
   if (!visibleProducts.length) {
-    productGrid.innerHTML = `${warningMarkup}<p class="no-results">No encontramos productos con esa búsqueda.</p>`;
+    const emptyMessage = activeCategory === "Favoritos" && !searchTerm
+      ? "Todavía no tienes productos favoritos. Marca el corazón de un producto para guardarlo aquí."
+      : "No encontramos productos con esa búsqueda.";
+    productGrid.innerHTML = `${warningMarkup}<p class="no-results">${emptyMessage}</p>`;
     return;
   }
 
@@ -393,6 +559,7 @@ function renderProducts() {
     .map(
       (product) => {
         const available = isProductAvailable(product);
+        const isFavorite = favoriteProductIds.has(product.id);
         return `
         <article class="product-card">
           <div class="product-image-wrap">
@@ -401,6 +568,9 @@ function renderProducts() {
               <button class="product-image-view" type="button" data-view-product="${escapeHtml(product.id)}" aria-label="Ver imagen de ${escapeHtml(product.name)} ampliada">
                 <img class="product-image" src="${escapeHtml(product.image)}" alt="" loading="${product.id === "libro_pestanas_10Vol_a_14Vol_x2" ? "eager" : "lazy"}" />
               </button>` : ""}
+              <button class="favorite-button${isFavorite ? " is-favorite" : ""}" type="button" data-favorite="${escapeHtml(product.id)}" aria-label="${isFavorite ? `Quitar ${escapeHtml(product.name)} de favoritos` : `Agregar ${escapeHtml(product.name)} a favoritos`}" aria-pressed="${isFavorite}">
+                ${isFavorite ? "♥" : "♡"}
+              </button>
               ${!available ? '<span class="product-tag">Agotado</span>' : product.tag ? `<span class="product-tag">${escapeHtml(product.tag)}</span>` : ""}
               <button class="add-button" type="button" data-add="${escapeHtml(product.id)}" aria-label="${available ? `Agregar ${escapeHtml(product.name)} al pedido` : `${escapeHtml(product.name)}, agotado`}" ${available ? "" : "disabled"}>
                 ${available ? 'Agregar al pedido <span aria-hidden="true">+</span>' : "Próximamente"}
@@ -477,44 +647,73 @@ function closeCart() {
   document.body.classList.remove("cart-open");
 }
 
-function buildOrderMessage(name, note) {
+function getPaymentDetails(paymentMethod) {
+  if (paymentMethod === "transferencia") {
+    return [
+      "Forma de pago: Transferencia bancaria",
+      `Titular: ${PAYMENT_ACCOUNT.beneficiary}`,
+      `Banco / billetera: ${PAYMENT_ACCOUNT.bank}`,
+      `Alias: ${PAYMENT_ACCOUNT.alias}`,
+      `Concepto sugerido: ${PAYMENT_ACCOUNT.concept}`,
+      "Por favor, envía el comprobante por este medio para confirmar la compra.",
+    ].join("\n");
+  }
+
+  return "Forma de pago: A coordinar por WhatsApp.";
+}
+
+function buildOrderMessage(name, note, paymentMethod = "transferencia") {
   const cartEntries = [...cart.entries()].filter(([id]) => isProductAvailable(findProduct(id)));
-  const productCount = cartEntries.reduce((total, [, quantity]) => total + quantity, 0);
   const lines = cartEntries.map(([id, quantity]) => {
     const product = findProduct(id);
     const unitPrice = product.price == null ? "A confirmar" : formatPrice(product.price);
     const subtotal = product.price == null ? "A confirmar" : formatPrice(product.price * quantity);
     return [
-      `*${product.name}*`,
-      `   Categoría: ${product.category}`,
-      `   Cantidad: ${quantity} × ${unitPrice}`,
-      `   Subtotal: ${subtotal}`,
-    ].join("\n");
+      product.name,
+      `Categoría: ${product.category}`,
+      `Cantidad: ${quantity} × ${unitPrice}`,
+      `Subtotal: ${subtotal}`,
+    ].join("\n  ");
   });
   const total = cartEntries.reduce((sum, [id, quantity]) => {
     return sum + (findProduct(id)?.price ?? 0) * quantity;
   }, 0);
   const hasUnpricedItems = cartEntries.some(([id]) => findProduct(id)?.price == null);
   return [
-    "🦋💜 *PURA BELLEZA JS* 💜🦋",
-    "¡Hola! Quiero hacer este pedido:",
+    "PURA BELLEZA JS",
     "",
-    `👤 *Nombre:* ${name}`,
-    `🛍️ *Productos:* ${productCount} ${productCount === 1 ? "unidad" : "unidades"} en ${cartEntries.length} ${cartEntries.length === 1 ? "producto" : "productos"}`,
+    "Hola, quiero hacer el siguiente pedido:",
     "",
-    ...lines,
+    `Nombre: ${name}`,
+    getPaymentDetails(paymentMethod),
     "",
-    `💜 *Total: ${hasUnpricedItems ? "A confirmar" : formatPrice(total)}*`,
-    note ? `📝 *Nota:* ${note}` : "",
+    "Productos:",
+    lines.join("\n\n"),
     "",
-    "¿Me cuentan las opciones de envío y pago?",
-    "¡Muchas gracias! 🦋💜",
+    `Total del pedido: ${hasUnpricedItems ? "A confirmar" : formatPrice(total)}`,
+    note ? `Nota: ${note}` : "",
+    "",
+    "¿Podrían indicarme las opciones de envío?",
+    "Muchas gracias.",
   ]
     .filter(Boolean)
     .join("\n");
 }
 
+function buildWhatsAppUrl(phone, message) {
+  const url = new URL(`https://wa.me/${phone}`);
+  const whatsappMessage = message.normalize("NFC").replace(/\r?\n/g, "\r\n");
+  url.searchParams.set("text", whatsappMessage);
+  return url.toString();
+}
+
 document.querySelector("#product-grid").addEventListener("click", (event) => {
+  const favoriteButton = event.target.closest("[data-favorite]");
+  if (favoriteButton) {
+    toggleFavorite(favoriteButton.dataset.favorite);
+    return;
+  }
+
   const imageButton = event.target.closest("[data-view-product]");
   if (imageButton) {
     const product = findProduct(imageButton.dataset.viewProduct);
@@ -557,10 +756,17 @@ document.querySelector("#cart-items").addEventListener("click", (event) => {
 document.querySelectorAll(".filter-chip").forEach((button) => {
   button.addEventListener("click", () => {
     activeCategory = button.dataset.category;
-    document.querySelector(".filter-chip.active").classList.remove("active");
+    document.querySelectorAll(".filter-chip").forEach((filterChip) => {
+      filterChip.classList.remove("active");
+    });
     button.classList.add("active");
     renderProducts();
   });
+});
+
+document.querySelector("#open-favorites").addEventListener("click", () => {
+  document.querySelector('.filter-chip[data-category="Favoritos"]').click();
+  document.querySelector("#productos").scrollIntoView({ behavior: "smooth" });
 });
 
 document.querySelector("#product-search").addEventListener("input", (event) => {
@@ -587,13 +793,45 @@ productDialog.addEventListener("click", (event) => {
   if (event.target === productDialog) productDialog.close();
 });
 
+const paymentMethodSelect = document.querySelector("#checkout-payment-method");
+const paymentTransferInfo = document.querySelector("#payment-transfer-info");
+
+function updatePaymentModeView() {
+  const selectedMethod = paymentMethodSelect.value;
+  const isTransfer = selectedMethod === "transferencia";
+  paymentTransferInfo.hidden = !isTransfer;
+}
+
+async function copyPaymentData() {
+  const paymentText = [
+    `Titular: ${PAYMENT_ACCOUNT.beneficiary}`,
+    `Banco / billetera: ${PAYMENT_ACCOUNT.bank}`,
+    `Alias: ${PAYMENT_ACCOUNT.alias}`,
+    `Concepto sugerido: ${PAYMENT_ACCOUNT.concept}`,
+  ].join("\n");
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(paymentText);
+      const hint = document.querySelector("#form-hint");
+      hint.textContent = "Datos bancarios copiados. Podes pegarlos en tu app de pago.";
+      return;
+    }
+  } catch (error) {
+    console.warn("No se pudieron copiar los datos bancarios:", error);
+  }
+
+  window.prompt("Copia estos datos para la transferencia:", paymentText);
+}
+
 document.querySelector("#checkout-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(event.currentTarget);
   const name = formData.get("name").toString().trim();
   const businessWhatsapp = formData.get("businessWhatsapp").toString();
+  const paymentMethod = formData.get("paymentMethod").toString();
   const note = formData.get("note").toString().trim();
-  const message = buildOrderMessage(name, note);
+  const message = buildOrderMessage(name, note, paymentMethod);
 
   if (!BUSINESS_WHATSAPP_NUMBERS.has(businessWhatsapp)) {
     const hint = document.querySelector("#form-hint");
@@ -601,18 +839,22 @@ document.querySelector("#checkout-form").addEventListener("submit", (event) => {
     return;
   }
 
-  window.open(
-    `https://wa.me/${businessWhatsapp}?text=${encodeURIComponent(message)}`,
-    "_blank",
-    "noopener,noreferrer",
-  );
+  window.open(buildWhatsAppUrl(businessWhatsapp, message), "_blank", "noopener,noreferrer");
   cart.clear();
   renderCart();
   event.currentTarget.reset();
+  paymentMethodSelect.value = "transferencia";
+  updatePaymentModeView();
   checkoutDialog.close();
 });
 
+document.querySelector("#copy-payment-data").addEventListener("click", copyPaymentData);
+paymentMethodSelect.addEventListener("change", updatePaymentModeView);
+updatePaymentModeView();
+
 restoreCachedCatalog();
+restoreFavorites();
+renderFavoritesCount();
 renderProducts();
 renderCart();
 loadProducts();
